@@ -1,0 +1,61 @@
+#popup_box { 
+
+	display:none; /* Hide the DIV */
+
+	height:auto;  
+
+	width:450px;  
+	
+	background:#c0d0e7;  
+        opacity : 0.92;
+
+	top: 150px;
+
+	z-index:700; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+
+	margin-right : 45px;
+	
+	/* additional features, can be omitted */
+
+	padding:10px 15px 10px 15px;  
+
+	font-size:12px;  
+	font-family : arial;
+	color : #fff;
+	
+	border-radius : 12px;
+    
+	margin-bottom : -10px;
+        border : solid 5px #96b5e0;
+
+}
+
+a{  
+
+cursor: pointer;  
+
+text-decoration:none;  
+
+} 
+
+
+
+/* This is for the positioning of the Close Link */
+
+#popupBoxClose {
+
+	font-size:20px;  
+
+	line-height:15px;  
+
+	right:-30px;  
+
+	top:10px;  
+
+	position:absolute;  
+
+	color:#6fa5e2;  
+
+	
+	
+}
