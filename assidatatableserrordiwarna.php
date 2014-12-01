@@ -1,5 +1,4 @@
 <?php
-ob_start("ob_gzhandler");
 include "cek-sesion.php";
 include "koneksi.php";
 $user=$_SESSION['username'];
@@ -9,9 +8,7 @@ $datauser=mysql_fetch_array($eksuser);
 $nama_lengkap=$datauser['nama_lengkap'];
 $area=$datauser['area'];
 $level=$_SESSION['level'];	
-$bagian=$_SESSION['bagian'];	
-
-?>
+$bagian=$_SESSION['bagian']; ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,93 +20,36 @@ include "title.php";
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link href="js/popup.css" rel="stylesheet" type="text/css" />
 <link href="js/gaya.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
-  <script type="text/javascript" src="java/nivo.js"></script>
-  <script type="text/javascript" src="java/jquery.watermark.min.js"></script>
+
+<script type="text/javascript" src="media/js/jquery.js"></script>
+  <script type="text/javascript" src="media/js/jquery.dataTables.min.js"></script>
+
+  <script type="text/javascript" src="media/js/dataTables.bootstrap.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="media/css/bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="media/css/dataTables.bootstrap.css"/>
+  <script type="text/javascript" src="js/notifikasi.js"></script>  
+  
   <script type="text/javascript" src="js/jquery.hoverIntent.minified.js"></script>
   <script type="text/javascript" src="js/jquery.dcmegamenu.1.3.3.js"></script>
   <link href="css/skins/white.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="js/notifikasi.js"></script>
   
-  <script type="text/javascript">
-  $(document).ready(function($){
-	$('#mega-menu-9').dcMegaMenu({
-		rowItems: '3',
-		speed: 'fast',
-		effect: 'fade'
-	});
-});
-</script>
+<script type="text/javascript" src="js/sbp.js"></script>
 
+<style type="text/css">
+	#header {
+		height: 120px;
+		z-index: 100;
 
+	}
+	.mega-menu {
+		z-index: 300;
+	}
+	#menu{
+  	height : 35px;
+  	}
+</style>
 
-
-<script type="text/javascript">
-
-	
-
-	$(document).ready( function() {
-
-	
-
-		// When site loaded, load the Popupbox First
-
-		loadPopupBox();
-
-	
-
-		$('#popupBoxClose').click( function() {			
-
-			unloadPopupBox();
-
-		});
-
-		
-
-		$('#container').click( function() {
-
-			unloadPopupBox();
-
-		});
-
-
-
-		function unloadPopupBox() {	// TO Unload the Popupbox
-
-			$('#popup_box').fadeOut("slow");
-
-			$("#container").css({ // this is just for style		
-
-				"opacity": "1"  
-
-			}); 
-
-		}	
-
-		
-
-		function loadPopupBox() {	// To Load the Popupbox
-
-			$('#popup_box').fadeIn("slow");
-
-			$("#container").css({ // this is just for style
-
-				"opacity": "0.3"  
-
-			}); 		
-
-		}
-
-		/**********************************************************/
-
-		
-
-	});
-
-</script>
-
-
-    
 </head>
 
 <body>
@@ -124,7 +64,8 @@ include "title.php";
 	<?php
 	echo '
         <p style="margin-bottom:-15px; color : #ED2024">Selamat datang <b>'.$nama_lengkap.' !</b> </p>
-	<h3 class="judulok">Data Internal Memo Assignment</h3>
+	<h3 class="judulok" align="center">Data Internal Memo Assignment</h3> <br> <br>
+	
         <table width="600px" border="0px" cellspacing="10px" style="margin:-10px 10px 10px -10px;">
 		<tr>
 			<td><img src="images/sevenday.png"></td>
@@ -136,42 +77,37 @@ include "title.php";
 		</tr>
 		
 		
+	</tbody>
 	</table>
-	<form name="pilih" method="GET" action="assiurut.php">
-
-	    <select onchange="this.form.submit()" name="tgl" id="confirmThis" style="margin-top : -10px; margin-bottom:10px">
-		<option value="">Tampilkan Berdasarkan</option>
-		<option value="rfslama">Tanggal RFS Terlama</option>
-		<option value="rfsbaru">Tanggal RFS Terbaru</option>
-		<option value="update">Last Update</option>
-		</select>
-		
-	</form>
+	
 ';
-	echo '<table cellspacing="0px" width="1024px">
-			<tr>
-				<td class="tdhead">No IM</td>
-				<td class="tdhead" width="350px">No FPB / No FPC</td>
-				<td class="tdhead" width="300px">Nama Perusahaan</td>
-     			<td class="tdhead" width="200px">Tgl RFS</td>
-				<td class="tdhead" width="300px">Jenis Pekerjaan</td>
-				<td class="tdhead">Order By</td>';
-		if($level=='Staff' && $bagian=='Teknikal'){
-		echo '  <td class="tdhead">Print SPK</td>
-				<td class="tdhead">Print BAO</td>';
-		}else if($level=='Condev' && $bagian=='Teknikal'){
-		echo '  <td class="tdhead">Print SPK</td>
-				<td class="tdhead">Print BAO</td>				
-                                <td class="tdhead">Pelaksana</td>';
-		}else if($level=='Engineer' && $bagian=='Teknikal'){
-		echo '  <td class="tdhead">Pelaksana</td>
-		<td class="tdhead">Perangkat</td>';
-		}
-	echo '
+echo '
+					<table id="assignment" class="table table-striped table-bordered" cellspacing="0" width="100%">
+				        <thead>
+				            <tr>
+	            				<th>No IM</th>
+	            				<th width="350px">No FPB / No FPC</th>
+	            				<th width="300px">Nama Perusahaan</th>
+	                 			<th width="200px">Tgl RFS</th>
+	            				<th width="300px">Jenis Pekerjaan</th>
+	            				<th>Order By</th>';
 
-                                <td class="tdhead">Followup</td>
-                                <td class="tdhead2">Detail</td>
-	</tr>';
+        						if($level=='Staff' && $bagian=='Teknikal'){
+        						echo '  <th>Print SPK</th>
+        								<th>Print BAO</th>';
+        						}else if($level=='Condev' && $bagian=='Teknikal'){
+        						echo '  <th>Print SPK</th>
+        								<th>Print BAO</th>				
+		                                <th>Pelaksana</th>';
+        						}else if($level=='Engineer' && $bagian=='Teknikal'){
+        						echo '  <th>Pelaksana</th>
+		        						<th>Perangkat</th>';
+        						}
+	echo '			            <th class="tdhead">Followup</th>
+                                <th class="tdhead2">Detail</th>
+								</tr>
+				        </thead>
+				   <tbody>';
 		
 	if($bagian=='Teknikal' && $level=='Manajer'){
 	$sqlCount = "select count(idfpa) from fpa_tb where status_tm='NOK'";  
@@ -180,7 +116,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from fpa_tb where status_tm='NOK' order by idfpa DESC limit $mulai_dari, $limit";
+	$pilihim="select * from fpa_tb where status_tm='NOK' order by idfpa DESC";
 	$eksim=mysql_query($pilihim);
 	while($dataim=mysql_fetch_array($eksim)){
 
@@ -265,7 +201,8 @@ include "title.php";
 	';
 	}
 	
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	}
 	elseif($bagian=='DCO' && $level=='Staff'){
     $termkus="select * from instal_im";
@@ -278,7 +215,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from instal_im where status_fin='OK' AND status_tm='NOK' order by id_imin DESC limit $mulai_dari, $limit";
+	$pilihim="select * from instal_im where status_fin='OK' AND status_tm='NOK' order by id_imin DESC";
 	$eksim=mysql_query($pilihim);
 	
 	$pilihfpa="select * from fpa_tb where noim='$noim'";
@@ -293,7 +230,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from instal_im where status_close='NOK' order by id_imin DESC limit $mulai_dari, $limit";
+	$pilihim="select * from instal_im where status_close='NOK' order by id_imin DESC";
 	$eksim=mysql_query($pilihim);
 	
 	
@@ -399,7 +336,8 @@ include "title.php";
 	';
 	}
 	
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	}
 	elseif($level=='Staff' && $bagian=='Finance' || $level=='Manajer' && $bagian=='Finance'){
 	$sqlCount = "select count(idfpa) from fpa_tb where status='Pending'";  
@@ -408,7 +346,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from fpa_tb where status='Pending' order by idfpa limit $mulai_dari, $limit";
+	$pilihim="select * from fpa_tb where status='Pending' order by idfpa";
 	$eksim=mysql_query($pilihim);
     
 	while($dataim=mysql_fetch_array($eksim)){
@@ -485,7 +423,8 @@ include "title.php";
 	';
 	}
 	
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	}
 	elseif($level=='Staff' && $bagian=='AR'){
 	$sqlCount = "select count(idmemo) from internal_memo where status_im='NOK' AND jenpek='Terminasi'";  
@@ -494,7 +433,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from internal_memo where status_im='NOK' AND jenpek='Terminasi' order by idmemo limit $mulai_dari, $limit";
+	$pilihim="select * from internal_memo where status_im='NOK' AND jenpek='Terminasi' order by idmemo";
 	$eksim=mysql_query($pilihim);
     
 	while($dataim=mysql_fetch_array($eksim)){
@@ -570,7 +509,8 @@ include "title.php";
 	';
 	}
 	
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	}
 	elseif($level=='Staff' && $bagian=='AP'){
 	
@@ -580,7 +520,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from fpa_tb where status='Pending' order by idfpa limit $mulai_dari, $limit";
+	$pilihim="select * from fpa_tb where status='Pending' order by idfpa";
 	$eksim=mysql_query($pilihim);
     
 	while($dataim=mysql_fetch_array($eksim)){
@@ -660,7 +600,8 @@ include "title.php";
 	';
 	}
 	
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	}
 	
 	elseif($level=='Engineer' && $bagian=='Teknikal'){
@@ -670,7 +611,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from instal_im where area='$area' AND status_close='NOK' or area='Global'  AND status_close='NOK' order by id_imin DESC limit $mulai_dari, $limit";
+	$pilihim="select * from instal_im where area='$area' AND status_close='NOK' or area='Global'  AND status_close='NOK' order by id_imin DESC";
 	$eksim=mysql_query($pilihim);
 	while($dataim=mysql_fetch_array($eksim)){
 	$noim=$dataim['noim'];
@@ -758,7 +699,8 @@ include "title.php";
 	';
 	}
 	
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	}
 	
 	
@@ -769,7 +711,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from instal_im where status_close='NOK' AND tujuan='$nama_lengkap' order by id_imin limit $mulai_dari, $limit";
+	$pilihim="select * from instal_im where status_close='NOK' AND tujuan='$nama_lengkap' order by id_imin";
 	$eksim=mysql_query($pilihim);
 	while($dataim=mysql_fetch_array($eksim)){
 	$dudatepra=substr($dataim['tglrfs'],0,2);
@@ -860,7 +802,8 @@ include "title.php";
 	';
 	}
 	
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	}
 	elseif($level=='Condev' && $bagian=='Teknikal'){
 	$sqlCount = "select count(id_imin) from instal_im where status_close='NOK' AND tujuan='Team Condev'";  
@@ -869,7 +812,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from instal_im where status_close='NOK' AND tujuan='Team Condev' order by id_imin limit $mulai_dari, $limit";
+	$pilihim="select * from instal_im where status_close='NOK' AND tujuan='Team Condev' order by id_imin";
 	$eksim=mysql_query($pilihim);
 	while($dataim=mysql_fetch_array($eksim)){
 	echo '
@@ -899,7 +842,8 @@ include "title.php";
 	';
 	}
 	
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	}
 	elseif($level=='Manajer' && $bagian=='Sales' || $level=='Staff' && $bagian=='Sales'){
 		
@@ -909,7 +853,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from instal_im where status='Pending' AND tujuan='Sales' order by noim desc limit $mulai_dari, $limit";
+	$pilihim="select * from instal_im where status='Pending' AND tujuan='Sales' order by noim desc";
 	$eksim=mysql_query($pilihim);
 	while($dataim=mysql_fetch_array($eksim)){
 	echo '
@@ -935,7 +879,8 @@ include "title.php";
 	';
 	}
 	
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	}
 	
 	elseif($level=='Super Admin' && $bagian=='Umum' || $level=='BOD' && $bagian=='Umum' ){
@@ -945,7 +890,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from instal_im where tujuan='BOD' order by id_imin limit $mulai_dari, $limit";
+	$pilihim="select * from instal_im where tujuan='BOD' order by id_imin";
 	$eksim=mysql_query($pilihim);
 	while($dataim=mysql_fetch_array($eksim)){
 	echo '
@@ -962,7 +907,8 @@ include "title.php";
 	';
 	}
 	
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	}
 	
 	$banyakHalaman = ceil($banyakData / $limit);
@@ -981,7 +927,7 @@ include "title.php";
 	if($level=='Manajer' && $bagian=='Teknikal'){
 	echo '
 	<h3 class="judulok">Data Request Barang Assignment</h3>
-	<table cellspacing="0px" width="890px">
+	<table cellspacing="0px" >
 			<tr>
 				<td class="tdhead">No IM</td>
 				<td class="tdhead">Jenis Barang</td>
@@ -997,7 +943,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from barang where statustm='NOK' order by id_barang limit $mulai_dari, $limit";
+	$pilihim="select * from barang where statustm='NOK' order by id_barang";
 	$eksim=mysql_query($pilihim);
 	while($dataim=mysql_fetch_array($eksim)){
 	echo '
@@ -1012,7 +958,8 @@ include "title.php";
 			</tr>
 	';
 	}
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	$banyakHalaman = ceil($banyakData / $limit);
 				echo '
 				<div id="paging_button">
@@ -1029,7 +976,7 @@ include "title.php";
 	else if($level=='Manajer' && $bagian=='Finance'){
 	echo '
 	<h3 class="judulok">Data Request Barang Assignment</h3>';
-	echo '<table cellspacing="0px" width="890px">
+	echo '<table cellspacing="0px" >
 			<tr>
 				<td class="tdhead">No IM</td>
                                 <td class="tdhead">Nama Pelanggan</td>
@@ -1045,7 +992,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from barang where statusfin='NOK' order by id_barang limit $mulai_dari, $limit";
+	$pilihim="select * from barang where statusfin='NOK' order by id_barang";
 	$eksim=mysql_query($pilihim);
 	while($dataim=mysql_fetch_array($eksim)){
         $noember=$dataim['noim'];
@@ -1065,7 +1012,8 @@ include "title.php";
 			</tr>
 	';
 	}
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	$banyakHalaman = ceil($banyakData / $limit);
 				echo '
 				<div id="paging_button">
@@ -1082,7 +1030,7 @@ include "title.php";
 	else if($level=='BOD' && $bagian=='Umum'){
 	echo '
 	<h3 class="judulok">Data Request Barang Assignment</h3>';
-	echo '<table cellspacing="0px" width="890px">
+	echo '<table cellspacing="0px" >
 			<tr>
 				<td class="tdhead">No IM</td>
 				<td class="tdhead">Jenis Barang</td>
@@ -1097,7 +1045,7 @@ include "title.php";
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
 	$limit = 8;  
 	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from barang where statuspo='NOK' order by id_barang limit $mulai_dari, $limit";
+	$pilihim="select * from barang where statuspo='NOK' order by id_barang";
 	$eksim=mysql_query($pilihim);
 	while($dataim=mysql_fetch_array($eksim)){
 	echo '
@@ -1112,7 +1060,8 @@ include "title.php";
 			</tr>
 	';
 	}
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 	$banyakHalaman = ceil($banyakData / $limit);
 				echo '
 				<div id="paging_button">
@@ -1128,6 +1077,7 @@ include "title.php";
 	
 	}	
 		
+	
 			echo '
 		<div id="kepala">
 
@@ -1169,6 +1119,9 @@ include "title.php";
         </div>
 	</div>
 	</div>
+
+	<!--  End View Recent Update ###################################################################### -->
+
         <?php
            include "carikotak.php";
         ?>
@@ -1176,5 +1129,13 @@ include "title.php";
 	<div id="footer">
 		copyright &copy; www.sbp.net.id 2012 condev-team
 	</div>
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+    $('#assignment').dataTable( {
+        "pagingType": "full_numbers"
+    } );
+	} );
+	</script>
 </body>
 </html>

@@ -56,31 +56,42 @@ include "title.php";
 					$nama_file=$_FILES['fupload']['name'];
 					$pelanggan=$_POST['pelanggan'];
 					$status_close="OK";
-                                        $noim=$_POST['noim'];
+                    $noim=$_POST['noim'];
 					$namauser=$_POST['namalengkap'];
 					$jam=date('H:i:s');
 					$tanggal=date('d F Y');
 					$waktu=$tanggal.', Jam : '.$jam;
 					
-					$move = move_uploaded_file($lokasi_file,'bao/'.$nama_file);  
-					
-					if($move){  
-                                        $pilih_tbc="select * from customer_data";
-					$eksekusi_tbc=mysql_query($pilih_tbc);
-					while($urutid=mysql_fetch_array($eksekusi_tbc)){
-					$idcir=substr($urutid['cirid'],4);
-					$thn=date('Y');
-					$ciridok='0'.$idcir + 0001;
-					}
-					if ($urutid['cirid']=='0'){ 
-					$ciridactive=$thn.'0001';
-					}else {
-					$ciridactive=$thn.$ciridok;
-					}
+					if(is_uploaded_file($_FILES['fupload']['tmp_name']){
+
+                        $pilih_tbc="select * from customer_data";
+						$eksekusi_tbc=mysql_query($pilih_tbc);
+						
+						while($urutid=mysql_fetch_array($eksekusi_tbc)){
+
+							$idcir=substr($urutid['cirid'],4);
+							$thn=date('Y');
+							$ciridok='0'.$idcir + 0001;
+
+							}
+
+						if ($urutid['cirid']=='0'){ 
+
+							$ciridactive=$thn.'0001';
+
+						}
+
+						else {
+
+							$ciridactive=$thn.$ciridok;
+
+						}
+
 					$pilihnoim="select * from instal_im inner join fpa_tb on instal_im.noim=fpa_tb.noim where instal_im.noim='$noim'";
 					$eksnoim=mysql_query($pilihnoim);
 					$dataim=mysql_fetch_array($eksnoim);
 					$noim=$dataim['noim'];
+					$namafilebaru = str_replace('/', '_', $noim);
 					$nofpb=$dataim['nofpb'];
 					$tglstart=$dataim['tglstart'];
 					$selisih1 = mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y"));
@@ -93,7 +104,7 @@ include "title.php";
 					$sales=$dataim['nama_sales'];
 					$ipadd=$dataim['ipadd'];
 					$statdat='Active';
-                                        $ok='OK';
+                    $ok='OK';
 					
 					$cusdat="INSERT INTO customer_data (cirid, nama_perusahaan, alamat_perusahaan, alamat_tagihan, cp_teknis, bandwidth_client, nama_vendor, status, register_date,marketing,ippublic) VALUES ('$ciridactive','$namapers','$alamatpers','$alamatpers','$cp','$speed','$provider','$statdat','$tglrfs','$sales','$ipadd')";
 				    $eksekusidat=mysql_query($cusdat);
@@ -125,8 +136,8 @@ include "title.php";
 					$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 					mail($to,$subject,$message,$headers);
 
-$to3='cs@sbp.net.id';
-                                        $ccnya='noc@sbp.net.id';
+					$to3='cs@sbp.net.id';
+                    $ccnya='noc@sbp.net.id';
 					$from3 = "SAPSBP";
 					$headers3 = "From: SAP Information<sap@sbp.net.id>" . "\r\n";
 					$headers3 .= "MIME-Version: 1.0\r\n";
@@ -223,7 +234,7 @@ $to3='cs@sbp.net.id';
 		
 					mail($to4,$subject4,$message4,$headers4);
 
-                                        $pilihto2="select * from usr_tb where bagian='AR'";
+                    $pilihto2="select * from usr_tb where bagian='AR'";
 					$eksto2=mysql_query($pilihto2);
 					$datato2=mysql_fetch_array($eksto2);
 					$dataemail2=$datato2['email'];
@@ -232,13 +243,12 @@ $to3='cs@sbp.net.id';
 					$message2 = 'Project untuk perusahaan '.$pelanggan.' telah selesai Per Tanggal '.$tanggal.' Dengan Sales '.$nama_sales.' dan sudah bisa di lakukan penagihan, untuk detail silahkan liat di SAP';
 					$message = "Project untuk perusahaan ".$pelanggan." telah selesai ";
 					$headers .= "From: SAP Notification <sap@sbp.net.id>" . "\r\n";
-		                        $headers .= "MIME-Version: 1.0\r\n";
-		                        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-                                        $headers .= "Noim: " .$noim. "\r\n";
+                    $headers .= "MIME-Version: 1.0\r\n";
+                    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+                    $headers .= "Noim: " .$noim. "\r\n";
 					mail($to2,$subject2,$message2,$headers2);
 					header ('Location:assi.php');
 
-					
 					}else{  
 					echo "Gagal mengupload file";  
 					}  
