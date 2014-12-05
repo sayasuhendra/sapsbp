@@ -563,7 +563,7 @@ include "title.php";
 				<td class="tdisi">'.$dataim['orderby'].'</td>
 				<td class="tdisi"><a href="cabutim.php?noim='.$dataim['noim'].'"><img src="images/follow.png"></a></td>
                                 ';
-                                if($dataim['jenis_pekerjaan']=='Terminasi'){echo '<td class="tdisi2"><a href="detailiso.php?noim='.$dataim['noim'].'"><img src="images/detail.png"></a></td>';}
+                                if($dataim['jenpek']=='Terminasi'){echo '<td class="tdisi2"><a href="detailiso.php?noim='.$dataim['noim'].'"><img src="images/detail.png"></a></td>';}
                                 else{echo '<td class="tdisi2"><a href="detailim.php?noim='.$dataim['noim'].'"><img src="images/detail.png"></a></td>';}
                                 echo '
 			</tr>

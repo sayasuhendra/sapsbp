@@ -20,8 +20,8 @@ include "title.php";
   <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
   <link rel="stylesheet" href="js/jquery-ui.css" />
   <script src="js/jquery-ui.js"></script>
-  <script type="text/javascript" src="java/nivo.js"></script>
-  <script type="text/javascript" src="java/jquery.watermark.min.js"></script>
+  
+  
   <script type="text/javascript" src="js/jquery.hoverIntent.minified.js"></script>
   <script type="text/javascript" src="js/jquery.dcmegamenu.1.3.3.js"></script>
   <link href="css/skins/white.css" rel="stylesheet" type="text/css" />
@@ -115,8 +115,9 @@ ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
 				<td class="tdhead">PO</td>
 				<td class="tdhead">SPK</td>
 				<td class="tdhead">Inventory</td>
-				<td class="tdhead">Provisioning</td>
-				<td class="tdhead2">Detail Project</td>
+				<td class="tdhead">Provisioning</td>';
+                                if($bagian=='AR'){echo '<td class="tdhead">PO Pelanggan</td>';}
+				echo '<td class="tdhead2">Detail Project</td>
                                 
 			</tr>';
 	if($level=='Staff' && $bagian=='Sales'){
@@ -167,9 +168,15 @@ ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
 				echo '</td>
 				<td class="tdisi">'; if($dataim['status_fin']=='OK'){echo '<a id="show-option3" href="#" title="'.$dataim['tgluppo'].'"><img src="images/cekok.png"></a>';}else{echo '<img src="images/stop.png">';} echo '</td>
 				<td class="tdisi">'; if($dataim['status_spk']=='OK'){echo '<a id="show-option4" href="#" title="'.$dataim['tglupspk'].'"><img src="images/cekok.png"></a>';}else{echo '<img src="images/stop.png">';} echo '</td>
-				<td class="tdisi">'; if($dataim['status_inven']=='OK'){echo '<a id="show-option1" href="#" title="'.$dataim['tglupinven'].'"><img src="images/cekok.png"></a>';}else{echo '<img src="images/stop.png">';} echo '</td>
+				<td class="tdisi">'; if($hasilbr['jumstat']==0){echo '<a id="show-option1" href="#" title="'.$dataim['tglupinven'].'"><img src="images/cekok.png"></a>';}else{echo '<img src="images/stop.png">';} echo '</td>
 				<td class="tdisi">'; if($dataim['status_close']=='OK'){echo '<img src="images/cekok.png">';}else{echo '<img src="images/stop.png">';} echo '</td>';
-                echo '<td class="tdisi2"><a href="detailim.php?noim='.$dataim['noim'].'"><img src="images/detail.png"></a>
+								if($bagian=='AR' && $dataim['popel']==""){
+                                echo '<td class="tdisi">Tidak Ada PO Pelanggan';}
+                                else{
+                                echo '<td class="tdisi"><a href="po/'.$dataim['popel'].'" target="_blank"><img src="images/detail.png"></a>';}
+                                echo '
+
+                                <td class="tdisi2"><a href="detailim.php?noim='.$dataim['noim'].'"><img src="images/detail.png"></a>
 				</td>
 			</tr>
 	';

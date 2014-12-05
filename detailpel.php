@@ -50,6 +50,8 @@ include "title.php";
 	$pilihim="select * from customer_new where cirid='$id'";
 	$eksim=mysql_query($pilihim);
 	$client=mysql_fetch_array($eksim);
+
+	$instalim = Instal::where('namapers', $client['nama_perusahaan'])->first();
 	
 	
 	echo '
@@ -104,6 +106,28 @@ include "title.php";
 				<td class="tdetail" width="20px;">:</td>
 				<td class="tdetail">'.$client['register_date'].'</td>
 			</tr>
+
+			<tr>
+				<th colspan="3" class="detail">Data Kontak dari IM</th>
+			</tr>
+			<tr>
+				<td class="tdetail" width="150px;">Nama Contact Person</td>
+				<td class="tdetail" width="20px;">:</td>
+				<td class="tdetail">'. $instalim->cp .'</td>
+			</tr>
+			<tr>
+				<td class="tdetail" width="150px;">Telepon</td>
+				<td class="tdetail" width="20px;">:</td>
+				<td class="tdetail">'. $instalim->telp .'</td>
+			</tr>
+			<tr>
+				<td class="tdetail" width="150px;">Email</td>
+				<td class="tdetail" width="20px;">:</td>
+				<td class="tdetail">'. $instalim->email .'</td>
+			</tr>
+
+
+
 			<tr>
 				<th colspan="3" class="detail">Layanan</th>
 			</tr>

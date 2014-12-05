@@ -21,8 +21,8 @@ include "title.php";
   <link rel="stylesheet" href="js/jquery-ui.css" />
   <script src="js/jquery-ui.js"></script>
   <link href="js/gaya.css" rel="stylesheet" type="text/css" />
-  
-  
+  <script type="text/javascript" src="java/nivo.js"></script>
+  <script type="text/javascript" src="java/jquery.watermark.min.js"></script>
   <script type="text/javascript" src="js/jquery.hoverIntent.minified.js"></script>
   <script type="text/javascript" src="js/jquery.dcmegamenu.1.3.3.js"></script>
   <link href="css/skins/white.css" rel="stylesheet" type="text/css" />

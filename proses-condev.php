@@ -91,7 +91,10 @@ include "title.php";
 					$eksnoim=mysql_query($pilihnoim);
 					$dataim=mysql_fetch_array($eksnoim);
 					$noim=$dataim['noim'];
+
 					$namafilebaru = str_replace('/', '_', $noim);
+					$move = move_uploaded_file($lokasi_file,'po/'.$nama_file);
+
 					$nofpb=$dataim['nofpb'];
 					$tglstart=$dataim['tglstart'];
 					$selisih1 = mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y"));

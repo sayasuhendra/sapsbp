@@ -1132,9 +1132,14 @@ echo '
 
 	<script type="text/javascript">
 	$(document).ready(function() {
-    $('#assignment').dataTable( {
-        "pagingType": "full_numbers"
-    } );
+	    $('#assignment').dataTable( {
+	        "pagingType": "full_numbers",
+	        "createdRow": function ( row, data, index ) {
+	            if ( data[5].replace(/[\$,]/g, '') * 1 > 4000 ) {
+	                $('td', row).eq(5).addClass('highlight');
+	            }
+	        }
+	    } );
 	} );
 	</script>
 </body>
