@@ -23,6 +23,7 @@ include "title.php";
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link href="js/popup.css" rel="stylesheet" type="text/css" />
 <link href="js/gaya.css" rel="stylesheet" type="text/css" />
+
   <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
   <script type="text/javascript" src="java/nivo.js"></script>
   <script type="text/javascript" src="java/jquery.watermark.min.js"></script>
@@ -30,85 +31,7 @@ include "title.php";
   <script type="text/javascript" src="js/jquery.dcmegamenu.1.3.3.js"></script>
   <link href="css/skins/white.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="js/notifikasi.js"></script>
-  
-  <script type="text/javascript">
-  $(document).ready(function($){
-	$('#mega-menu-9').dcMegaMenu({
-		rowItems: '3',
-		speed: 'fast',
-		effect: 'fade'
-	});
-});
-</script>
-
-
-
-
-<script type="text/javascript">
-
-	
-
-	$(document).ready( function() {
-
-	
-
-		// When site loaded, load the Popupbox First
-
-		loadPopupBox();
-
-	
-
-		$('#popupBoxClose').click( function() {			
-
-			unloadPopupBox();
-
-		});
-
-		
-
-		$('#container').click( function() {
-
-			unloadPopupBox();
-
-		});
-
-
-
-		function unloadPopupBox() {	// TO Unload the Popupbox
-
-			$('#popup_box').fadeOut("slow");
-
-			$("#container").css({ // this is just for style		
-
-				"opacity": "1"  
-
-			}); 
-
-		}	
-
-		
-
-		function loadPopupBox() {	// To Load the Popupbox
-
-			$('#popup_box').fadeIn("slow");
-
-			$("#container").css({ // this is just for style
-
-				"opacity": "0.3"  
-
-			}); 		
-
-		}
-
-		/**********************************************************/
-
-		
-
-	});
-
-</script>
-
-
+  <script type="text/javascript" src="js/assi.js"></script>
     
 </head>
 
@@ -119,6 +42,7 @@ include "title.php";
 	include "menu.php";
 	
 	?>
+
 	<div id="isi">
 	
 	<?php
@@ -194,34 +118,7 @@ include "title.php";
 	$duthn=substr($dataim['target'],-4);
 
 
-		switch($dunamebln2)
-		{
-		case "January" : $namaBln = "01";
-					 break;
-		case "February" : $namaBln = "02";
-					 break;
-		case "March" : $namaBln = "03";
-					 break;
-		case "April" : $namaBln = "04";
-					 break;
-		case "May" : $namaBln = "05";
-					 break;
-		case "June" : $namaBln = "06";
-					 break;
-		case "July" : $namaBln = "07";
-					 break;
-		case "August" : $namaBln = "08";
-					 break;
-		case "September" : $namaBln = "09";
-					 break;
-		case "October" : $namaBln = "10";
-					 break;
-		case "November" : $namaBln = "11";
-					 break;
-		case "December" : $namaBln = "12";
-					 break;
-					 
-		}
+		require 'assi/bulan.php';
 	
 	$batasakhir=$dudate.'-'.$namaBln.'-'.$duthn;
 	$warningrsf=strtotime('-0 day',strtotime($batasakhir));
@@ -267,140 +164,11 @@ include "title.php";
 	
 	echo '</table>';
 	}
+
 	elseif($bagian=='DCO' && $level=='Staff'){
-    $termkus="select * from instal_im";
-    $ekskus=mysql_query($termkus);
-    $daterm=mysql_fetch_array($ekskus);
-    if($daterm['jenis_pekerjaan']=='Terminasi'){
-    $sqlCount = "select count(id_imin) from instal_im where status_fin='OK' AND status_tm='NOK'";  
-	$rsCount = mysql_fetch_array(mysql_query($sqlCount));  
-	$banyakData = $rsCount[0];  
-	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
-	$limit = 8;  
-	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from instal_im where status_fin='OK' AND status_tm='NOK' order by id_imin DESC limit $mulai_dari, $limit";
-	$eksim=mysql_query($pilihim);
-	
-	$pilihfpa="select * from fpa_tb where noim='$noim'";
-	$eksfpa=mysql_query($pilihfpa);
-	$noimfpa=mysql_fetch_row($eksfpa);
-	
-	
-	}else{
-    $sqlCount = "select count(id_imin) from instal_im where status_close='NOK'";  
-	$rsCount = mysql_fetch_array(mysql_query($sqlCount));  
-	$banyakData = $rsCount[0];  
-	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
-	$limit = 8;  
-	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from instal_im where status_close='NOK' order by id_imin DESC limit $mulai_dari, $limit";
-	$eksim=mysql_query($pilihim);
-	
-	
-	
+		require 'assi/dco.php';
 	}
-	while($dataim=mysql_fetch_array($eksim)){
-	
-	$dudatepra=substr($dataim['tglrfs'],0,2);
-	$dudateaja=trim($dudatepra);
-	$dudate=sprintf("%02s",$dudateaja);
-	$jatuhtempo=mktime(date("d"), date("m"), date("Y"));
-	$dubln=substr($dataim['tglrfs'],2);
-	$dunamebln=substr($dubln,0,-4);
-	$dunamebln2=trim($dunamebln);
-	$duthn=substr($dataim['tglrfs'],-4);
 
-
-		switch($dunamebln2)
-		{
-		case "January" : $namaBln = "01";
-					 break;
-		case "February" : $namaBln = "02";
-					 break;
-		case "March" : $namaBln = "03";
-					 break;
-		case "April" : $namaBln = "04";
-					 break;
-		case "May" : $namaBln = "05";
-					 break;
-		case "June" : $namaBln = "06";
-					 break;
-		case "July" : $namaBln = "07";
-					 break;
-		case "August" : $namaBln = "08";
-					 break;
-		case "September" : $namaBln = "09";
-					 break;
-		case "October" : $namaBln = "10";
-					 break;
-		case "November" : $namaBln = "11";
-					 break;
-		case "December" : $namaBln = "12";
-					 break;
-					 
-		}
-	
-	$batasakhir=$dudate.'-'.$namaBln.'-'.$duthn;
-	$warningrsf=strtotime('-0 day',strtotime($batasakhir));
-	
-	$batasrfslum=$warningrsf-$jatuhtempo;
-	$batasrfs = floor($batasrfslum / 86400);
-	if($batasrfs <= 7){
-	echo '
-			<tr class="tdgawat">';
-	}else if($batasrfs >= 7 && $batasrfs <= 14){
-	echo '
-			<tr class="tdwarning">';
-	}else if($batasrfs > 14){
-	echo '
-			<tr style="background-color:none;">';
-	}
-	
-	$noimpra=$dataim['noim'];
-	$pilihfpa="select * from fpa_tb where noim='$noimpra'";
-	$eksfpa=mysql_query($pilihfpa);
-	$noimfpa=mysql_fetch_row($eksfpa);
-	
-	echo '
-        
-				<td class="tdisi">'.$dataim['noim'].'</td>
-				<td class="tdisi">'.$dataim['nofpb'].'</td>
-				<td class="tdisi">'.$dataim['namapers'].'</td>
-				<td class="tdisi">'.$dataim['tglrfs'].'</td>
-				<td class="tdisi">'.$dataim['jenis_pekerjaan'].'</td>
-				<td class="tdisi">'.$dataim['nama_sales'].'</td>
-				<td class="tdisi">';
-                                if($dataim['jenis_pekerjaan']=='Terminasi' && $dataim['status_im']=='OK'){echo '<a href="formfpac.php?noim='.$dataim['noim'].'"><img src="images/follow.png"></a>';}
-				elseif($dataim['jenis_pekerjaan']=='Terminasi' && $dataim['status_im']=='NOK'){echo '<img src="images/follow2.png">';}
-                elseif($dataim['jenis_pekerjaan']=='Terminasi' && $dataim['status_tm']=='OK'){echo '<img src="images/follow2.png">';}				elseif($dataim['jenis_pekerjaan']=='Instalasi' && $dataim['status_tm']=='NOK' && $noimfpa<=0){echo '<a href="formfpa.php?noim='.$dataim['noim'].'"><img src="images/follow.png"></a>';}
-				elseif($dataim['jenis_pekerjaan']=='Instalasi' && $dataim['status_tm']=='NOK' && $noimfpa>0){echo '<img src="images/follow2.png">';}
-				elseif($dataim['jenis_pekerjaan']=='Instalasi' && $dataim['status_tm']=='OK' && $dataim['statvendor']==''){echo '<a href="upvendor.php?noim='.$dataim['noim'].'"><img src="images/editvendor.png"></a>';}
-				
-                                elseif($dataim['jenis_pekerjaan']=='Instalasi' && $dataim['status_tm']=='OK'){echo '<img src="images/follow2.png">';}
-
-			elseif($dataim['jenis_pekerjaan']=='BOD' && $dataim['status_tm']=='NOK' && $noimfpa>0){echo '<img src="images/follow2.png">';}
-
-                                elseif($dataim['jenis_pekerjaan']=='BOD' && $dataim['status_tm']=='OK'){echo '<img src="images/follow2.png">';}
-
-                                elseif($dataim['jenis_pekerjaan']=='Mutasi' && $dataim['status_tm']=='NOK'){echo '<a href="formfpa.php?noim='.$dataim['noim'].'"><img src="images/follow.png"></a>';}
-								elseif($dataim['jenis_pekerjaan']=='Mutasi' && $dataim['status_tm']=='NOK' && $noimfpa>0 ){echo '<img src="images/follow2.png">';}
-						        elseif($dataim['jenis_pekerjaan']=='Mutasi' && $dataim['status_tm']=='OK' && $noimfpa>0 && $dataim['statvendor']=='' ){echo '<a href="upvendor.php?noim='.$dataim['noim'].'"><img src="images/editvendor.png"></a>';}
-								elseif($dataim['jenis_pekerjaan']=='Mutasi' && $dataim['status_tm']=='OK'){echo '<img src="images/follow2.png">';}
-				elseif($dataim['jenis_pekerjaan']=='Survey'){echo '<a href="appsur.php?noim='.$dataim['noim'].'"><img src="images/follow.png"></a>';}
-				else{
-				echo '<a href="formfpa.php?noim='.$dataim['noim'].'"><img src="images/follow.png"></a>';
-				}
-				echo '
-				</td>';
-                                if($dataim['jenis_pekerjaan']=='Terminasi'){echo '<td class="tdisi2"><a href="detailiso.php?noim='.$dataim['noim'].'"><img src="images/detail.png"></a></td>';}
-                                else{echo '<td class="tdisi2"><a href="detailim.php?noim='.$dataim['noim'].'"><img src="images/detail.png"></a></td>';}
-                                echo '
-			</tr>
-	';
-	}
-	
-	echo '</table>';
-	}
 	elseif($level=='Staff' && $bagian=='Finance' || $level=='Manajer' && $bagian=='Finance'){
 	$sqlCount = "select count(idfpa) from fpa_tb where status='Pending'";  
 	$rsCount = mysql_fetch_array(mysql_query($sqlCount));  
@@ -422,34 +190,7 @@ include "title.php";
 	$duthn=substr($dataim['target'],-4);
 
 
-		switch($dunamebln2)
-		{
-		case "January" : $namaBln = "01";
-					 break;
-		case "February" : $namaBln = "02";
-					 break;
-		case "March" : $namaBln = "03";
-					 break;
-		case "April" : $namaBln = "04";
-					 break;
-		case "May" : $namaBln = "05";
-					 break;
-		case "June" : $namaBln = "06";
-					 break;
-		case "July" : $namaBln = "07";
-					 break;
-		case "August" : $namaBln = "08";
-					 break;
-		case "September" : $namaBln = "09";
-					 break;
-		case "October" : $namaBln = "10";
-					 break;
-		case "November" : $namaBln = "11";
-					 break;
-		case "December" : $namaBln = "12";
-					 break;
-					 
-		}
+		require 'assi/bulan.php';
 	
 	$batasakhir=$dudate.'-'.$namaBln.'-'.$duthn;
 	$warningrsf=strtotime('-0 day',strtotime($batasakhir));
@@ -508,34 +249,7 @@ include "title.php";
 	$duthn=substr($dataim['tgl_req'],-4);
 
 
-		switch($dunamebln2)
-		{
-		case "January" : $namaBln = "01";
-					 break;
-		case "February" : $namaBln = "02";
-					 break;
-		case "March" : $namaBln = "03";
-					 break;
-		case "April" : $namaBln = "04";
-					 break;
-		case "May" : $namaBln = "05";
-					 break;
-		case "June" : $namaBln = "06";
-					 break;
-		case "July" : $namaBln = "07";
-					 break;
-		case "August" : $namaBln = "08";
-					 break;
-		case "September" : $namaBln = "09";
-					 break;
-		case "October" : $namaBln = "10";
-					 break;
-		case "November" : $namaBln = "11";
-					 break;
-		case "December" : $namaBln = "12";
-					 break;
-					 
-		}
+		require 'assi/bulan.php';
 	
 	$batasakhir=$dudate.'-'.$namaBln.'-'.$duthn;
 	$warningrsf=strtotime('-0 day',strtotime($batasakhir));
@@ -595,34 +309,7 @@ include "title.php";
 	$duthn=substr($dataim['target'],-4);
 
 
-		switch($dunamebln2)
-		{
-		case "January" : $namaBln = "01";
-					 break;
-		case "February" : $namaBln = "02";
-					 break;
-		case "March" : $namaBln = "03";
-					 break;
-		case "April" : $namaBln = "04";
-					 break;
-		case "May" : $namaBln = "05";
-					 break;
-		case "June" : $namaBln = "06";
-					 break;
-		case "July" : $namaBln = "07";
-					 break;
-		case "August" : $namaBln = "08";
-					 break;
-		case "September" : $namaBln = "09";
-					 break;
-		case "October" : $namaBln = "10";
-					 break;
-		case "November" : $namaBln = "11";
-					 break;
-		case "December" : $namaBln = "12";
-					 break;
-					 
-		}
+		require 'assi/bulan.php';
 	
 	$batasakhir=$dudate.'-'.$namaBln.'-'.$duthn;
 	$warningrsf=strtotime('-0 day',strtotime($batasakhir));
@@ -687,34 +374,7 @@ include "title.php";
 	$duthn=substr($dataim['tglrfs'],-4);
 
 
-		switch($dunamebln2)
-		{
-		case "January" : $namaBln = "01";
-					 break;
-		case "February" : $namaBln = "02";
-					 break;
-		case "March" : $namaBln = "03";
-					 break;
-		case "April" : $namaBln = "04";
-					 break;
-		case "May" : $namaBln = "05";
-					 break;
-		case "June" : $namaBln = "06";
-					 break;
-		case "July" : $namaBln = "07";
-					 break;
-		case "August" : $namaBln = "08";
-					 break;
-		case "September" : $namaBln = "09";
-					 break;
-		case "October" : $namaBln = "10";
-					 break;
-		case "November" : $namaBln = "11";
-					 break;
-		case "December" : $namaBln = "12";
-					 break;
-					 
-		}
+		require 'assi/bulan.php';
 	
 	$batasakhir=$dudate.'-'.$namaBln.'-'.$duthn;
 	$warningrsf=strtotime('-0 day',strtotime($batasakhir));
@@ -782,34 +442,7 @@ include "title.php";
 	$duthn=substr($dataim['tglrfs'],-4);
 
 
-		switch($dunamebln2)
-		{
-		case "January" : $namaBln = "01";
-					 break;
-		case "February" : $namaBln = "02";
-					 break;
-		case "March" : $namaBln = "03";
-					 break;
-		case "April" : $namaBln = "04";
-					 break;
-		case "May" : $namaBln = "05";
-					 break;
-		case "June" : $namaBln = "06";
-					 break;
-		case "July" : $namaBln = "07";
-					 break;
-		case "August" : $namaBln = "08";
-					 break;
-		case "September" : $namaBln = "09";
-					 break;
-		case "October" : $namaBln = "10";
-					 break;
-		case "November" : $namaBln = "11";
-					 break;
-		case "December" : $namaBln = "12";
-					 break;
-					 
-		}
+		require 'assi/bulan.php';
 	
 	$batasakhir=$dudate.'-'.$namaBln.'-'.$duthn;
 	$warningrsf=strtotime('-0 day',strtotime($batasakhir));
@@ -901,277 +534,53 @@ include "title.php";
 	
 	echo '</table>';
 	}
+
+
 	elseif($level=='Manajer' && $bagian=='Sales' || $level=='Staff' && $bagian=='Sales'){
 		
-	$sqlCount = "select count(id_imin) from instal_im where status='Pending' AND tujuan='Sales' order by noim desc";  
-	$rsCount = mysql_fetch_array(mysql_query($sqlCount));  
-	$banyakData = $rsCount[0];  
-	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
-	$limit = 8;  
-	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from instal_im where status='Pending' AND tujuan='Sales' order by noim desc limit $mulai_dari, $limit";
-	$eksim=mysql_query($pilihim);
-	while($dataim=mysql_fetch_array($eksim)){
-	echo '
-			<tr>
-
-				<td class="tdisi">'.$dataim['noim'].'</td>
-				<td class="tdisi">'.$dataim['nofpb'].'</td>
-				<td class="tdisi">'.$dataim['namapers'].'</td>
-				<td class="tdisi">'.$dataim['tglrfs'].'</td>
-				<td class="tdisi">'.$dataim['jenis_pekerjaan'].'</td>
-				<td class="tdisi">'.$dataim['nama_sales'].'</td>
-				<td class="tdisi">';if($dataim['jenis_pekerjaan']=='Terminasi'){
-				echo '<a href="appiso.php?noim='.$dataim['noim'].'"><img src="images/follow.png"></a>';}else if($dataim['jenis_pekerjaan']=='Isolir'){
-				echo '<a href="appiso.php?noim='.$dataim['noim'].'"><img src="images/follow.png"></a>';
-				}
-				echo '
-				</td>';
-                                if($dataim['jenis_pekerjaan']=='Terminasi'){echo '<td class="tdisi2"><a href="detailiso.php?noim='.$dataim['noim'].'"><img src="images/detail.png"></a></td>';}
-                                else{echo '<td class="tdisi2"><a href="detailim.php?noim='.$dataim['noim'].'"><img src="images/detail.png"></a></td>';}
-                                echo '
-
-			</tr>
-	';
-	}
+		require 'assi/manajer/sales.php';
 	
-	echo '</table>';
 	}
+
 	
 	elseif($level=='Super Admin' && $bagian=='Umum' || $level=='BOD' && $bagian=='Umum' ){
-	$sqlCount = "select count(id_imin) from instal_im where tujuan='BOD'";  
-	$rsCount = mysql_fetch_array(mysql_query($sqlCount));  
-	$banyakData = $rsCount[0];  
-	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
-	$limit = 8;  
-	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from instal_im where tujuan='BOD' order by id_imin limit $mulai_dari, $limit";
-	$eksim=mysql_query($pilihim);
-	while($dataim=mysql_fetch_array($eksim)){
-	echo '
-			<tr>
-				<td class="tdisi">'.$dataim['noim'].'</td>
-				<td class="tdisi">'.$dataim['nofpb'].'</td>
-				<td class="tdisi">'.$dataim['namapers'].'</td>
-				<td class="tdisi">'.$dataim['tglrfs'].'</td>
-				<td class="tdisi">'.$dataim['jenis_pekerjaan'].'</td>
-				<td class="tdisi">'.$dataim['nama_sales'].'</td>
-				<td class="tdisi"><a href="folim.php?id_imin='.$dataim['id_imin'].'"><img src="images/follow.png"></a></td>
-                                <td class="tdisi2"><a href="detailim.php?noim='.$dataim['noim'].'"><img src="images/detail.png"></a></td>
-			</tr>
-	';
-	}
-	
-	echo '</table>';
-	}
-	
-	$banyakHalaman = ceil($banyakData / $limit);
-				echo '
-				<div id="paging_button">
-				<ul><p style="font-family:verdana; font-size:12px; margin-top:2px; color:#4e4c47; float:left;">Halaman :</p>';
-				  for($i=1; $i<=$banyakHalaman; $i++){
-                                  if($page != $i){
-				   echo '<a href="assi.php?page='.$i.'"<li id="'.$i.'">'.$i.'</li></a>';
-				  }else {
-				  echo "<a style='background-color:#d9d9d9'>$i</a>";
-				  }				  }
-			  echo "</ul></div>";
 		
-	
+		require 'assi/umum/supernbod.php';
+
+		}
+
+
 	if($level=='Manajer' && $bagian=='Teknikal'){
-	echo '
-	<h3 class="judulok">Data Request Barang Assignment</h3>
-	<table cellspacing="0px" width="890px">
-			<tr>
-				<td class="tdhead">No IM</td>
-				<td class="tdhead">Jenis Barang</td>
-				<td class="tdhead">Merk</td>
-				<td class="tdhead">Jumlah</td>
-				<td class="tdhead">Order By</td>
-                                
-				<td class="tdhead2">Followup</td>
-			</tr>';
-	$sqlCount = "select count(id_barang) from barang where statustm='NOK'";  
-	$rsCount = mysql_fetch_array(mysql_query($sqlCount));  
-	$banyakData = $rsCount[0];  
-	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
-	$limit = 8;  
-	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from barang where statustm='NOK' order by id_barang limit $mulai_dari, $limit";
-	$eksim=mysql_query($pilihim);
-	while($dataim=mysql_fetch_array($eksim)){
-	echo '
-			<tr>
-
-				<td class="tdisi">'.$dataim['noim'].'</td>
-				<td class="tdisi">'.$dataim['jenis'].'</td>
-				<td class="tdisi">'.$dataim['merk'].'</td>
-				<td class="tdisi">'.$dataim['jumlah'].'</td>
-				<td class="tdisi">'.$dataim['orderby'].'</td>
-				<td class="tdisi2"><a href="folreqbr.php?id_barang='.$dataim['id_barang'].'"><img src="images/follow.png"></a></td>
-			</tr>
-	';
-	}
-	echo '</table>';
-	$banyakHalaman = ceil($banyakData / $limit);
-				echo '
-				<div id="paging_button">
-				<ul><p style="font-family:verdana; font-size:12px; margin-top:2px; color:#4e4c47; float:left;">Halaman :</p>';
-				  for($i=1; $i<=$banyakHalaman; $i++){
-                                  if($page != $i){
-				   echo '<a href="assi.php?page='.$i.'"<li id="'.$i.'">'.$i.'</li></a>';
-				  }else {
-				  echo "<a style='background-color:#d9d9d9'>$i</a>";
-				  }				  }
-			  echo "</ul></div>";
+		
+		require 'assi/manajer/teknikal.php';
 	
-	}
+		}
+
+
 	else if($level=='Manajer' && $bagian=='Finance'){
-	echo '
-	<h3 class="judulok">Data Request Barang Assignment</h3>';
-	echo '<table cellspacing="0px" width="890px">
-			<tr>
-				<td class="tdhead">No IM</td>
-                                <td class="tdhead">Nama Pelanggan</td>
-				<td class="tdhead">Jenis Barang</td>
-				<td class="tdhead">Merk</td>
-				<td class="tdhead">Jumlah</td>
-				<td class="tdhead">Order By</td>
-				<td class="tdhead2">Followup</td>
-			</tr>';
-	$sqlCount = "select count(id_barang) from barang where statusfin='NOK'";  
-	$rsCount = mysql_fetch_array(mysql_query($sqlCount));  
-	$banyakData = $rsCount[0];  
-	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
-	$limit = 8;  
-	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from barang where statusfin='NOK' order by id_barang limit $mulai_dari, $limit";
-	$eksim=mysql_query($pilihim);
-	while($dataim=mysql_fetch_array($eksim)){
-        $noember=$dataim['noim'];
-        $pilihmber="select * from instal_im where noim='$noember'";
-        $eksember=mysql_query($pilihmber);
-        $namaber=mysql_fetch_array($eksember);
-	echo '
-			<tr>
-
-				<td class="tdisi">'.$dataim['noim'].'</td>
-                                <td class="tdisi">'.$namaber['namapers'].'</td>
-				<td class="tdisi">'.$dataim['jenis'].'</td>
-				<td class="tdisi">'.$dataim['merk'].'</td>
-				<td class="tdisi">'.$dataim['jumlah'].'</td>
-				<td class="tdisi">'.$dataim['orderby'].'</td>
-				<td class="tdisi2"><a href="folreqbr.php?id_barang='.$dataim['id_barang'].'"><img src="images/follow.png"></a></td>
-			</tr>
-	';
-	}
-	echo '</table>';
-	$banyakHalaman = ceil($banyakData / $limit);
-				echo '
-				<div id="paging_button">
-				<ul><p style="font-family:verdana; font-size:12px; margin-top:2px; color:#4e4c47; float:left;">Halaman :</p>';
-				  for($i=1; $i<=$banyakHalaman; $i++){
-                                  if($page != $i){
-				   echo '<a href="assi.php?page='.$i.'"<li id="'.$i.'">'.$i.'</li></a>';
-				  }else {
-				  echo "<a style='background-color:#d9d9d9'>$i</a>";
-				  }				  }
-			  echo "</ul></div>";
+		
+		require 'assi/manajer/finance.php';
 	
-	}
+		}
+
+
 	else if($level=='BOD' && $bagian=='Umum'){
-	echo '
-	<h3 class="judulok">Data Request Barang Assignment</h3>';
-	echo '<table cellspacing="0px" width="890px">
-			<tr>
-				<td class="tdhead">No IM</td>
-				<td class="tdhead">Jenis Barang</td>
-				<td class="tdhead">Merk</td>
-				<td class="tdhead">Jumlah</td>
-				<td class="tdhead">Order By</td>
-				<td class="tdhead2">Followup</td>
-			</tr>';
-	$sqlCount = "select count(id_barang) from barang";  
-	$rsCount = mysql_fetch_array(mysql_query($sqlCount));  
-	$banyakData = $rsCount[0];  
-	$page = isset($_GET['page']) ? $_GET['page'] : 1;  
-	$limit = 8;  
-	$mulai_dari = $limit * ($page - 1);  
-	$pilihim="select * from barang where statuspo='NOK' order by id_barang limit $mulai_dari, $limit";
-	$eksim=mysql_query($pilihim);
-	while($dataim=mysql_fetch_array($eksim)){
-	echo '
-			<tr>
 
-				<td class="tdisi">'.$dataim['noim'].'</td>
-				<td class="tdisi">'.$dataim['jenis'].'</td>
-				<td class="tdisi">'.$dataim['merk'].'</td>
-				<td class="tdisi">'.$dataim['jumlah'].'</td>
-				<td class="tdisi">'.$dataim['orderby'].'</td>
-				<td class="tdisi2"><a href="folreqbr.php?id_barang='.$dataim['id_barang'].'"><img src="images/follow.png"></a></td>
-			</tr>
-	';
-	}
-	echo '</table>';
-	$banyakHalaman = ceil($banyakData / $limit);
-				echo '
-				<div id="paging_button">
-				<ul><p style="font-family:verdana; font-size:12px; margin-top:2px; color:#4e4c47; float:left;">Halaman :</p>';
-				  for($i=1; $i<=$banyakHalaman; $i++){
-				  if($page != $i){
-				   echo '<a href="assi.php?page='.$i.'"<li id="'.$i.'">'.$i.'</li></a>';
-				  }else {
-				  echo "<a style='background-color:#d9d9d9'>$i</a>";
-				  }
-				  }
-			  echo "</ul></div>";
-	
-	}	
-		
-			echo '
-		<div id="kepala">
-
-			<span id="pesan">
-
-			<span id="viewrec">View Recent Update</span>
-
-			<span id="notifikasi"></span>
-
-			</span>
-		<div id="info">
-                <div id="close"><a id="close"><img src="images/close.png"></a></div>
-			<div id="konten-info">
-			<div id="content">';
-
-		$pilihreport="select * from report_pro order by idreport DESC limit 8";
-		$eksreport=mysql_query($pilihreport);
-
-		
-
-		while($datarep = mysql_fetch_array($eksreport)){
-                $noimfb=$datarep['noim'];
-                $pilihnampro="select * from instal_im where noim='$noimfb'"; 
-                $eksnampro=mysql_query($pilihnampro);
-                $nampro=mysql_fetch_array($eksnampro);
-
-			echo '<p class="resentp2"><b>'.$datarep['nama_user'].'</b>, '.$datarep['tgl'].' </p>';
-
-			echo '<p class="resentp">'.$datarep['isi_report'].'</p>';
-
-                        echo '<p class="resentp">Project Untuk : '.$nampro['namapers'].'</p>
-                        <p class="resentp3"><a style="color:#C94133" href="detailim.php?noim='.$nampro['noim'].'" target="_blank">Detail</a></p>
-';
+		require 'assi/bod.php';
 			
 		}
+
 
 	?>
         </div>
         </div>
 	</div>
 	</div>
-        <?php
-           include "carikotak.php";
-        ?>
+
+
+    <?php
+       include "carikotak.php";
+    ?>
 	
 	<div id="footer">
 		copyright &copy; www.sbp.net.id 2012 condev-team
