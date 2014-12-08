@@ -57,7 +57,10 @@ include "title.php";
 			<tr>
 				<td valign="top" class="text-contact">Browse BAO <span style="color:red; font-size;9px;">*</span></td>
 				<td valign="top" class="text-contact">:</td>
-		        <td valign="top" class="text-contact"><input type="file" name="fupload" required placeholder="Required"><input type="hidden" name="namalengkap" value="'.$namauser.'"></td>
+		        <td valign="top" class="text-contact">
+			        <input type="file" name="fupload" required placeholder="Required">
+			        <input type="hidden" name="namalengkap" value="'.$namauser.'">
+		        </td>
 			</tr>
 			
 			<tr>

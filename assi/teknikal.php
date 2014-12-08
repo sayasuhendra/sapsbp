@@ -50,7 +50,7 @@ $sqlCount = "select count(id_imin) from instal_im where status_close='NOK' AND t
                                 }else{echo '<a target="_blank" href="print-spk.php?noim='.$dataim['noim'].'"><img src="images/print.png"></a></td>';
                                 }
                                 echo '
-				<td class="tdisi"><a target="_blank" href="print-bao.php?noim='.$dataim['noim'].'"><img src="images/print.png"></a></td>';
+								<td class="tdisi"><a target="_blank" href="print-bao.php?noim='.$dataim['noim'].'"><img src="images/print.png"></a></td>';
                                 if($dataim['jenis_pekerjaan']=='Instalasi'){
                                 echo '<td class="tdisi"><a href="report-bao.php?noim='.$dataim['noim'].'"><img src="images/follow.png"></a></td>';
                                 }else if($dataim['jenis_pekerjaan']=='Terminasi'){

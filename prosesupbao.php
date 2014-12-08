@@ -43,6 +43,7 @@ include "title.php";
 	</div>
 	<?php
 	include "menu.php";
+	require 'helper/file.php';
 	
 	?>
 	<?php
@@ -52,62 +53,54 @@ include "title.php";
 		
 					include "koneksi.php";
 					date_default_timezone_set('Asia/Jakarta');
+
                     $noim=$_POST['noim'];
-					$lokasi_file=$_FILES['fupload']['tmp_name'];
+
+                    $lokasi_file=$_FILES['fupload']['tmp_name'];
 					$tipe_file=$_FILES['fupload']['type'];
-					$nama_file=$_FILES['fupload']['name'];
+					
+					
+					
+					
+
 					$lokasi_file2=$_FILES['topologi']['tmp_name'];
 					$tipe_file2=$_FILES['topologi']['type'];
-					$nama_file2=$_FILES['topologi']['name'];
+
 					$lokasi_file3=$_FILES['speed']['tmp_name'];
 					$tipe_file3=$_FILES['speed']['type'];
-					$nama_file3=$_FILES['speed']['name'];
+
 					$lokasi_file4=$_FILES['foto']['tmp_name'];
 					$tipe_file4=$_FILES['foto']['type'];
-					$nama_file4=$_FILES['foto']['name'];
+
                     $pelanggan=$_POST['pelanggan'];
 					$status_close="OK";
                     $namauser=$_POST['namalengkap'];
 					$jam=date('H:i:s');
 					$tanggal=date('d F Y');
 					$waktu=$tanggal.', Jam : '.$jam;
-					
-					$move = move_uploaded_file($lokasi_file,'bao/'.$nama_file);  
-					$move2 = move_uploaded_file($lokasi_file2,'topologi/'.$nama_file2);  
-					$move3 = move_uploaded_file($lokasi_file3,'speedtest/'.$nama_file3);  
-					$move4 = move_uploaded_file($lokasi_file4,'foto/'.$nama_file4);  
+
+					$namafilebaru = str_replace('/', '_', $noim);
+
+					$namabao = "BAO_IM_" . $namafilebaru . File::ext($tipe_file);;
+					$namatopologi = "Topologi_IM_" . $namafilebaru . File::ext($tipe_file2);;
+					$namaspeedtest = "Speedtest_IM_" . $namafilebaru . File::ext($tipe_file3);;
+					$namafoto = "Foto_IM_" . $namafilebaru . File::ext($tipe_file4);;
+
+					$move = move_uploaded_file($lokasi_file,'bao/' . $namabao);
+					$move2 = move_uploaded_file($lokasi_file2,'topologi/' . $namatopologi);
+					$move3 = move_uploaded_file($lokasi_file3,'speedtest/' . $namaspeedtest);
+					$move4 = move_uploaded_file($lokasi_file4,'foto/' . $namafoto);
 					
 					if($move && $move3 ){  
-                    $pilih_tbc="select * from customer_new";
-					$eksekusi_tbc=mysql_query($pilih_tbc);
-					while($urutid=mysql_fetch_array($eksekusi_tbc)){
-					$idcir=substr($urutid['cirid'],-4);
-					$thn=date('y');
-                                        $bln=date('m');
-                                        $hri=date('d'); 
-                                        if($area='Batam'){
-                                        $kode='1';
-                                        
-                                        }else if($area='Jakarta'){
-                                        $kode='2';
-                                        
-                                        }else if($area='TPI'){
-                                        $kode='3';
-                                        
-                                        }else if($area='TBK'){
-                                        $kode='4';
-
-                                        }
-
-                                 	$ciridlomok='0'.$idcir + 0001;
-                                        $ciridok=sprintf("%04s",$ciridlomok);
-					}
-					if ($urutid['cirid']=='0'){ 
-					$ciridactive=$thn.$bln.$hri.$kode.'0001';
-					}else {
-					$ciridactive=$thn.$bln.$hri.$kode.$ciridok;
-					}
+                    	
+						$noim4digit = substr($noim, 0, 4);
+						$thn=date('y');
+					    $bln=date('m');
+					    $hri=date('d');
+					    $cirid = $thn . $bln . $hri . "0" . $noim4digit;
+					
 					$pilihnoim="select * from instal_im inner join fpa_tb on instal_im.noim=fpa_tb.noim where instal_im.noim='$noim'";
+
 					$eksnoim=mysql_query($pilihnoim);
 					$dataim=mysql_fetch_array($eksnoim);
 					$noim=$dataim['noim'];
@@ -123,20 +116,24 @@ include "title.php";
 					$sales=$dataim['nama_sales'];
 					$ipadd=$dataim['ipadd'];
 					$statdat='Active';
-                                        $ok='OK';
-                                        $areab=$dataim['area'];
+                    $ok='OK';
+                    $areab=$dataim['area'];
 					
 					if($dataim['jenis_pekerjaan']=='Instalasi'){
-					$cusdat="INSERT INTO customer_new (pelaksana,file_topologi,file_speed,file_foto,cirid, nama_perusahaan, alamat_perusahaan, alamat_tagihan, cp_teknis, bandwidth_client, nama_vendor, status, register_date,marketing,ippublic) VALUES ('$namauser','$nama_file2','$nama_file3','$nama_file4','$ciridactive','$namapers','$alamatpers','$alamatpers','$cp','$speed','$provider','$statdat','$tglrfs','$sales','$ipadd')";
-                    $eksekusidat=mysql_query($cusdat);
+
+						$cusdat= " INSERT INTO customer_new (pelaksana,file_topologi,file_speed,file_foto,cirid, nama_perusahaan, alamat_perusahaan, alamat_tagihan, cp_teknis, bandwidth_client, nama_vendor, status, register_date,marketing,ippublic) 
+													VALUES ('$namauser','$namatopologi','$namaspeedtest','$namafoto','$cirid','$namapers','$alamatpers','$alamatpers','$cp','$speed','$provider','$statdat','$tglrfs','$sales','$ipadd')";
+
+	                    $eksekusidat=mysql_query($cusdat);
+
 					}
 									
 					$nama_sales=$dataim['nama_sales'];
 					$isi='Project Untuk Pelanggan '.$pelanggan.' Telah Selesai. ';
-					$input="insert into upload_bao (noim,namapers,file_bao) values ('$noim','$pelanggan','$nama_file')";
+					$input="insert into upload_bao (noim,namapers,file_bao) values ('$noim','$pelanggan','$namabao')";
 					$eksinput=mysql_query($input);
 					
-					$upstat="update instal_im SET status='Finish', tujuan='Finish', status_close='$status_close', file_bao='$nama_file', file_topologi='$nama_file2', file_speed='$nama_file3', file_foto='$nama_file4' where noim='$noim'";
+					$upstat="update instal_im SET status='Finish', tujuan='Finish', status_close='$status_close', file_bao='$namabao', file_topologi='$namatopologi', file_speed='$namaspeedtest', file_foto='$namafoto' where noim='$noim'";
 					$eksupstat=mysql_query($upstat);
 					
 					$upstat2="update internal_memo SET tglfin='$selisih1', status_spk='$ok', status_close='$status_close', status_inven='$ok' where noim='$noim'";
@@ -205,8 +202,8 @@ include "title.php";
 									
 								</table>
 								
-						<p>Untuk Topologi dapat di akses di <a href="http://sap.sbp.net.id//topologi/'.$nama_file2.'" target="_blank">sini</a></p>
-						<p>Untuk Foto Perangkat dapat di akses di <a href="http://sap.sbp.net.id//foto/'.$nama_file4.'" target="_blank">sini</a></p>';
+						<p>Untuk Topologi dapat di akses di <a href="http://sap.sbp.net.id/topologi/'.$namatopologi.'" target="_blank">sini</a></p>
+						<p>Untuk Foto Perangkat dapat di akses di <a href="http://sap.sbp.net.id/foto/'.$namafoto.'" target="_blank">sini</a></p>';
 					
 							
 					$message3 .='
@@ -253,8 +250,8 @@ include "title.php";
 									
 								</table>
 								
-						<p>Untuk Topologi dapat di akses di <a href="http://sap.sbp.net.id//topologi/'.$nama_file2.'" target="_blank">sini</a></p>
-						<p>Untuk Foto Perangkat dapat di akses di <a href="http://sap.sbp.net.id//foto/'.$nama_file4.'" target="_blank">sini</a></p>';
+						<p>Untuk Topologi dapat di akses di <a href="http://sap.sbp.net.id/topologi/'.$namatopologi.'" target="_blank">sini</a></p>
+						<p>Untuk Foto Perangkat dapat di akses di <a href="http://sap.sbp.net.id/foto/'.$namafoto.'" target="_blank">sini</a></p>';
 					
 							
 					$message4 .='
@@ -263,7 +260,7 @@ include "title.php";
 		
 					mail($to4,$subject4,$message4,$headers4);
 
-                                        $pilihto2="select * from usr_tb where bagian='AR'";
+                    $pilihto2="select * from usr_tb where bagian='AR'";
 					$eksto2=mysql_query($pilihto2);
 					$datato2=mysql_fetch_array($eksto2);
 					$dataemail2=$datato2['email'];
@@ -272,9 +269,9 @@ include "title.php";
 					$message2 = 'Project untuk perusahaan '.$pelanggan.' telah selesai Per Tanggal '.$tanggal.' Dengan Sales '.$nama_sales.' dan sudah bisa di lakukan penagihan, untuk detail silahkan liat di SAP';
 					$message = "Project untuk perusahaan ".$pelanggan." telah selesai ";
 					$headers .= "From: SAP Notification <sap@sbp.net.id>" . "\r\n";
-		                        $headers .= "MIME-Version: 1.0\r\n";
-		                        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-                                        $headers .= "Noim: " .$noim. "\r\n";
+                    $headers .= "MIME-Version: 1.0\r\n";
+                    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+                    $headers .= "Noim: " .$noim. "\r\n";
 					mail($to2,$subject2,$message2,$headers2);
 					header ('Location:assi.php');
 					

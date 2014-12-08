@@ -1,15 +1,16 @@
 <?php
-ob_start("ob_gzhandler");
-include "cek-sesion.php";
-include "koneksi.php";
-$user=$_SESSION['username'];
-$pilihuser="select * from usr_tb where username='$user'";
-$eksuser=mysql_query($pilihuser);
-$datauser=mysql_fetch_array($eksuser);
-$nama_lengkap=$datauser['nama_lengkap'];
-$area=$datauser['area'];
-$level=$_SESSION['level'];	
-$bagian=$_SESSION['bagian'];	
+
+	ob_start("ob_gzhandler");
+	include "cek-sesion.php";
+	include "koneksi.php";
+	$user=$_SESSION['username'];
+	$pilihuser="select * from usr_tb where username='$user'";
+	$eksuser=mysql_query($pilihuser);
+	$datauser=mysql_fetch_array($eksuser);
+	$nama_lengkap=$datauser['nama_lengkap'];
+	$area=$datauser['area'];
+	$level=$_SESSION['level'];	
+	$bagian=$_SESSION['bagian'];	
 
 ?>
 
@@ -17,12 +18,12 @@ $bagian=$_SESSION['bagian'];
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<?php
-include "title.php";
-?>
-<link href="style.css" rel="stylesheet" type="text/css" />
-<link href="js/popup.css" rel="stylesheet" type="text/css" />
-<link href="js/gaya.css" rel="stylesheet" type="text/css" />
+
+<?php include "title.php"; ?>
+
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<link href="js/popup.css" rel="stylesheet" type="text/css" />
+	<link href="js/gaya.css" rel="stylesheet" type="text/css" />
 
   <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
   <script type="text/javascript" src="java/nivo.js"></script>
@@ -150,6 +151,7 @@ include "title.php";
 
 
 	?>
+
         </div>
         </div>
 	</div>
@@ -161,7 +163,11 @@ include "title.php";
     ?>
 	
 	<div id="footer">
+
 		copyright &copy; www.sbp.net.id 2012 condev-team
+		
 	</div>
+
 </body>
+
 </html>
