@@ -77,7 +77,7 @@ include "title.php";
 					<td valign="top" style="width:990px;">
 					 					 
 					
-					<img src="images/logokecil.png" style="margin-top:-30px; margin-left:280px; ">
+					<img src="images/logobaru.png" style="margin-top:-30px; margin-left:240px; ">
 					<h3 style="font-family:georgia; margin-left:165px; font-size:19px; margin-top:-6px; color:#3d3c3c;">SURAT PERINTAH TERMINASI</h3> 
 					<h3 style="font-family:georgia; margin-left:175px;  font-size:19px; margin-top:-15px; color:#3d3c3c;">'.$noba.'</h3> 
 					 

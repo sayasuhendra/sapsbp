@@ -57,20 +57,16 @@ include "title.php";
                     $noim=$_POST['noim'];
 
                     $lokasi_file=$_FILES['fupload']['tmp_name'];
-					$tipe_file=$_FILES['fupload']['type'];
-					
-					
-					
-					
+					$tipe_file=$_FILES['fupload']['name'];		
 
 					$lokasi_file2=$_FILES['topologi']['tmp_name'];
-					$tipe_file2=$_FILES['topologi']['type'];
+					$tipe_file2=$_FILES['topologi']['name'];
 
 					$lokasi_file3=$_FILES['speed']['tmp_name'];
-					$tipe_file3=$_FILES['speed']['type'];
+					$tipe_file3=$_FILES['speed']['name'];
 
 					$lokasi_file4=$_FILES['foto']['tmp_name'];
-					$tipe_file4=$_FILES['foto']['type'];
+					$tipe_file4=$_FILES['foto']['name'];
 
                     $pelanggan=$_POST['pelanggan'];
 					$status_close="OK";
@@ -81,10 +77,15 @@ include "title.php";
 
 					$namafilebaru = str_replace('/', '_', $noim);
 
-					$namabao = "BAO_IM_" . $namafilebaru . File::ext($tipe_file);;
-					$namatopologi = "Topologi_IM_" . $namafilebaru . File::ext($tipe_file2);;
-					$namaspeedtest = "Speedtest_IM_" . $namafilebaru . File::ext($tipe_file3);;
-					$namafoto = "Foto_IM_" . $namafilebaru . File::ext($tipe_file4);;
+					$extention = File::ext($tipe_file);
+					$extention2 = File::ext($tipe_file2);
+					$extention3 = File::ext($tipe_file3);
+					$extention4 = File::ext($tipe_file4);
+
+					$namabao = "BAO_IM_" . $namafilebaru . "." . $extention;
+					$namatopologi = "Topologi_IM_" . $namafilebaru . "." . $extention2;
+					$namaspeedtest = "Speedtest_IM_" . $namafilebaru . "." . $extention3;
+					$namafoto = "Foto_IM_" . $namafilebaru . "." . $extention4;
 
 					$move = move_uploaded_file($lokasi_file,'bao/' . $namabao);
 					$move2 = move_uploaded_file($lokasi_file2,'topologi/' . $namatopologi);
