@@ -195,15 +195,15 @@ return true;
 				<td>:</td>
 				<td>
 					<select name="services">
-						<option value="">-- Pilih Services --
-						<option value="Internet Dedicated">Internet Dedicated
-						<option value="Internet Broadband">Internet Broadband
-                                                <option value="ADSL">ADSL
-						<option value="L2">L2
-                                                <option value="Local Loop">Local Loop
-						<option value="Colocation">Colocation
-						<option value="Hosting">Hosting
-						<option value="IP Transit">IP Transit
+						<option value="">-- Pilih Services --</option>
+						<option value="Internet Dedicated">Internet Dedicated</option>
+						<option value="Internet Broadband">Internet Broadband</option>
+                        <option value="ADSL">ADSL</option>
+						<option value="L2">L2</option>
+                        <option value="Local Loop">Local Loop</option>
+						<option value="Colocation">Colocation</option>
+						<option value="Hosting">Hosting</option>
+						<option value="IP Transit">IP Transit</option>
 					</select>
 				</td>
 			
@@ -224,12 +224,12 @@ return true;
 				<td>Media Akses</td>
 				<td>:</td>
 				<td><select name="media">
-						<option value="">-- Pilih Media --
-						<option value="Fiber Optic">Fiber Optic
-						<option value="Wireless">Wireless
-						<option value="Vsat">Vsat
-						<option value="Adsl">Adsl
-						<option value="Cooper">Cooper
+						<option value="">-- Pilih Media --</option>
+						<option value="Fiber Optic">Fiber Optic</option>
+						<option value="Wireless">Wireless</option>
+						<option value="Vsat">Vsat</option>
+						<option value="Adsl">Adsl</option>
+						<option value="Cooper">Cooper</option>
 					</select>
 				</td>
 			</tr>
