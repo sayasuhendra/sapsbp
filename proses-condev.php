@@ -62,7 +62,7 @@ include "title.php";
 					$tanggal=date('d F Y');
 					$waktu=$tanggal.', Jam : '.$jam;
 					
-					if(is_uploaded_file($_FILES['fupload']['tmp_name']){
+					if(is_uploaded_file($_FILES['fupload']['tmp_name'])){
 
                         $pilih_tbc="select * from customer_data";
 						$eksekusi_tbc=mysql_query($pilih_tbc);
