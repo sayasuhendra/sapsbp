@@ -103,7 +103,6 @@
 				<td class="tdisi">'.$dataim['nama_sales'].'</td>
 				<td class="tdisi">';
 
-				// DCO follow up fields
 
                     if($dataim['jenis_pekerjaan']=='Terminasi' && $dataim['status_im']=='OK'){echo '<a href="formfpac.php?noim='.$dataim['noim'].'"><img src="images/follow.png"></a>';}
 					elseif($dataim['jenis_pekerjaan']=='Terminasi' && $dataim['status_im']=='NOK'){echo '<img src="images/follow2.png">';}
