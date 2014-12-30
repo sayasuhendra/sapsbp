@@ -24,22 +24,22 @@ include "title.php";
 <link href="js/popup.css" rel="stylesheet" type="text/css" />
 <link href="js/gaya.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
-  
-  
+  <script type="text/javascript" src="java/nivo.js"></script>
+  <script type="text/javascript" src="java/jquery.watermark.min.js"></script>
   <script type="text/javascript" src="js/jquery.hoverIntent.minified.js"></script>
   <script type="text/javascript" src="js/jquery.dcmegamenu.1.3.3.js"></script>
   <link href="css/skins/white.css" rel="stylesheet" type="text/css" />
-  
+  <script type="text/javascript" src="js/notifikasi.js"></script>
   
   <script type="text/javascript">
   $(document).ready(function($){
 	$('#mega-menu-9').dcMegaMenu({
 		rowItems: '3',
 		speed: 'fast',
-		effect: 'fade'as
+		effect: 'fade'
 	});
-	});
-	</script>
+});
+</script>
 
 
 
@@ -1128,7 +1128,6 @@ include "title.php";
 	
 	}	
 		
-	// View Recent Update --------------------------------------------------------------------------------------------------------------------------- //
 			echo '
 		<div id="kepala">
 
@@ -1170,9 +1169,6 @@ include "title.php";
         </div>
 	</div>
 	</div>
-
-	<!--  End View Recent Update ###################################################################### -->
-
         <?php
            include "carikotak.php";
         ?>

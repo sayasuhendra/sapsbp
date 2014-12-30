@@ -64,23 +64,49 @@ include "title.php";
 			</tr>
 			
 			<tr>
-				<td valign="top" class="text-contact">Browse Topologi <span style="color:red; font-size;9px;">*</span></td>
+				<td valign="top" class="text-contact">Browse Topologi</td>
 				<td valign="top" class="text-contact">:</td>
-		        <td valign="top" class="text-contact"><input type="file" name="topologi" placeholder="Required"></td>
+		        <td valign="top" class="text-contact"><input type="file" name="topologi"></td>
 			</tr>
 			
 			<tr>
-				<td valign="top" class="text-contact">Browse Capture Speedtest <span style="color:red; font-size;9px;">*</span></td>
+				<td valign="top" class="text-contact">Browse Capture Speedtest</td>
 				<td valign="top" class="text-contact">:</td>
-		        <td valign="top" class="text-contact"><input type="file" name="speed" required placeholder="Required"></td>
+		        <td valign="top" class="text-contact"><input type="file" name="speed"></td>
 			</tr>
-			
+						
+			<tr>
+				<td valign="top" class="text-contact">Browse Capture NMS</td>
+				<td valign="top" class="text-contact">:</td>
+		        <td valign="top" class="text-contact"><input type="file" name="nms"></td>
+			</tr>
+						
+			<tr>
+				<td valign="top" class="text-contact">Browse Capture Pizza</td>
+				<td valign="top" class="text-contact">:</td>
+		        <td valign="top" class="text-contact"><input type="file" name="pizza"></td>
+			</tr>
+						
 			<tr>
 				<td valign="top" class="text-contact">Browse Foto Lokasi</td>
 				<td valign="top" class="text-contact">:</td>
 		        <td valign="top" class="text-contact"><input type="file" name="foto"></td>
 			</tr>
-					
+
+			<tr>				
+				<td>URL Sinology</td>
+				<td>:</td>
+				<td><input type="text" name="sinology" size="100">
+				</td>
+			</tr>	
+
+			<tr>				
+				<td>Keterangan untuk yang tidak di upload</td>
+				<td>:</td>
+				<td><textarea cols="29" rows="5" style="padding:5px;" name="keterangan"> </textarea>
+				</td>
+			</tr>
+				
 			<tr>				
 				<td>Nama Pelanggan</td>
 				<td>:</td>
@@ -88,7 +114,7 @@ include "title.php";
 					<input type="hidden" name="noim" value="'.$noim.'">
 						
 				</td>
-			</tr>
+			</tr>	
 			<tr>				
 				<td></td>
 				<td></td>

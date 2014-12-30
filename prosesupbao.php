@@ -68,7 +68,17 @@ include "title.php";
 					$lokasi_file4=$_FILES['foto']['tmp_name'];
 					$tipe_file4=$_FILES['foto']['name'];
 
+					$lokasi_file5=$_FILES['pizza']['tmp_name'];
+					$tipe_file5=$_FILES['pizza']['name'];
+
+					$lokasi_file6=$_FILES['nms']['tmp_name'];
+					$tipe_file6=$_FILES['nms']['name'];
+
                     $pelanggan=$_POST['pelanggan'];
+
+                    $keterangan = $_POST['keterangan'];
+                    $sinology = $_POST['sinology'];
+
 					$status_close="OK";
                     $namauser=$_POST['namalengkap'];
 					$jam=date('H:i:s');
@@ -82,23 +92,43 @@ include "title.php";
 					$extention3 = File::ext($tipe_file3);
 					$extention4 = File::ext($tipe_file4);
 
+					$extention5 = File::ext($tipe_file5);
+					$extention6 = File::ext($tipe_file6);
+
 					$namabao = "BAO_IM_" . $namafilebaru . "." . $extention;
 					$namatopologi = "Topologi_IM_" . $namafilebaru . "." . $extention2;
 					$namaspeedtest = "Speedtest_IM_" . $namafilebaru . "." . $extention3;
 					$namafoto = "Foto_IM_" . $namafilebaru . "." . $extention4;
+					$namapizza = "Pizza_IM_" . $namafilebaru . "." . $extention5;
+					$namanms = "NMS_IM_" . $namafilebaru . "." . $extention6;
+
 
 					$move = move_uploaded_file($lokasi_file,'bao/' . $namabao);
 					$move2 = move_uploaded_file($lokasi_file2,'topologi/' . $namatopologi);
 					$move3 = move_uploaded_file($lokasi_file3,'speedtest/' . $namaspeedtest);
 					$move4 = move_uploaded_file($lokasi_file4,'foto/' . $namafoto);
+					$move5 = move_uploaded_file($lokasi_file5,'pizza/' . $namapizza);
+					$move6 = move_uploaded_file($lokasi_file6,'nms/' . $namanms);
 					
-					if($move && $move3 ){  
-                    	
+					if(!$move){ $namabao = "kosong"; }
+					if(!$move2){ $namatopologi = "kosong"; }
+					if(!$move3){ $namaspeedtest = "kosong"; }
+					if(!$move4){ $namafoto = "kosong"; }
+					if(!$move5){ $namapizza = "kosong"; }
+					if(!$move6){ $namanms = "kosong"; }
+
+					echo ($move)? "Berhasil mengupload BAO." : "Gagal mengupload BAO."; echo "<br><br>";
+					echo ($move2)? "Berhasil mengupload Topologi." : "Gagal mengupload Topologi."; echo "<br><br>";
+					echo ($move3)? "Berhasil mengupload Speedtest." : "Gagal mengupload Speedtest."; echo "<br><br>";
+					echo ($move4)? "Berhasil mengupload Foto Lokasi." : "Gagal mengupload Foto Lokasi."; echo "<br><br>";
+					echo ($move5)? "Berhasil mengupload Capture Pizza." : "Gagal mengupload Capture Pizza."; echo "<br><br>";
+					echo ($move6)? "Berhasil mengupload Capture NMS." : "Gagal mengupload Capture NMS.";
+
 						$noim4digit = substr($noim, 0, 4);
 						$thn=date('y');
 					    $bln=date('m');
 					    $hri=date('d');
-					    $cirid = $thn . $bln . $hri . "0" . $noim4digit;
+					    $cirid = $thn . $bln . $hri . $noim4digit;
 					
 					$pilihnoim="select * from instal_im inner join fpa_tb on instal_im.noim=fpa_tb.noim where instal_im.noim='$noim'";
 
@@ -106,7 +136,6 @@ include "title.php";
 					$dataim=mysql_fetch_array($eksnoim);
 					$noim=$dataim['noim'];
 					$nofpb=$dataim['nofpb'];
-					$tglstart=$dataim['tglstart'];
 					$selisih1 = mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y"));
 					$namapers=$dataim['namapers'];
 					$alamatpers=$dataim['alamat'];
@@ -122,8 +151,8 @@ include "title.php";
 					
 					if($dataim['jenis_pekerjaan']=='Instalasi'){
 
-						$cusdat= " INSERT INTO customer_new (pelaksana,file_topologi,file_speed,file_foto,cirid, nama_perusahaan, alamat_perusahaan, alamat_tagihan, cp_teknis, bandwidth_client, nama_vendor, status, register_date,marketing,ippublic) 
-													VALUES ('$namauser','$namatopologi','$namaspeedtest','$namafoto','$cirid','$namapers','$alamatpers','$alamatpers','$cp','$speed','$provider','$statdat','$tglrfs','$sales','$ipadd')";
+						$cusdat= " INSERT INTO customer_new (pelaksana, bao, nms, pizza, keterangan, sinology,file_topologi,file_speed,file_foto,cirid, nama_perusahaan, alamat_perusahaan, alamat_tagihan, cp_teknis, bandwidth_client, nama_vendor, status, register_date,marketing,ippublic) 
+													VALUES ('$namauser', '$namabao', '$namanms', '$namapizza', '$keterangan', '$sinology', '$namatopologi','$namaspeedtest','$namafoto','$cirid','$namapers','$alamatpers','$alamatpers','$cp','$speed','$provider','$statdat','$tglrfs','$sales','$ipadd')";
 
 	                    $eksekusidat=mysql_query($cusdat);
 
@@ -150,10 +179,10 @@ include "title.php";
 					$to=$dataemail;
 					$subject = "Project Completed [ ".$noim." ]";
 					$message = "Project untuk perusahaan ".$pelanggan." telah selesai ";
-					$headers .= "From: SAP Notification <sap@sbp.net.id>" . "\r\n";
-		                        $headers .= "MIME-Version: 1.0\r\n";
-		                        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-                                        $headers .= "Noim: " .$noim. "\r\n";
+					$headers = "From: SAP Notification <sap@sbp.net.id>" . "\r\n";
+		            $headers .= "MIME-Version: 1.0\r\n";
+		            $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+                    $headers .= "Noim: " .$noim. "\r\n";
 
 
 					mail($to,$subject,$message,$headers);
@@ -269,17 +298,12 @@ include "title.php";
 					$subject2 = "Project Completed [ ".$noim." ]";
 					$message2 = 'Project untuk perusahaan '.$pelanggan.' telah selesai Per Tanggal '.$tanggal.' Dengan Sales '.$nama_sales.' dan sudah bisa di lakukan penagihan, untuk detail silahkan liat di SAP';
 					$message = "Project untuk perusahaan ".$pelanggan." telah selesai ";
-					$headers .= "From: SAP Notification <sap@sbp.net.id>" . "\r\n";
-                    $headers .= "MIME-Version: 1.0\r\n";
-                    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-                    $headers .= "Noim: " .$noim. "\r\n";
+					$headers2  = "From: SAP Notification <sap@sbp.net.id>" . "\r\n";
+                    $headers2 .= "MIME-Version: 1.0\r\n";
+                    $headers2 .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+                    $headers2 .= "Noim: " .$noim. "\r\n";
 					mail($to2,$subject2,$message2,$headers2);
-					header ('Location:assi.php');
 					
-					}else{  
-					echo "Gagal mengupload file";  
-					}  
-						 
 	echo '		
 			
 	</div>';
