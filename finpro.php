@@ -107,6 +107,7 @@ ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
 				<td class="tdhead" width="30px">No</td>
 				<td class="tdhead" width="70px">Project Time</td>
 				<td class="tdhead" width="500px">No IM</td>
+				<td class="tdhead" width="500px">Circuit ID</td>
 				<td class="tdhead" width="550px">Nama Perusahaan</td>
 				<td class="tdhead" width="180px">Tgl RFS</td>
 				<td class="tdhead" width="190px">Order By</td>
@@ -131,7 +132,8 @@ ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
 	$no=0;
 	$pilihim="select * from internal_memo where orderby='$namalengkap' AND status_close='OK' AND statbil='' order by idmemo DESC limit $mulai_dari, $limit";
 	$eksim=mysql_query($pilihim);
-	while($dataim=mysql_fetch_array($eksim)){$no++;
+	while($dataim=mysql_fetch_array($eksim)){
+	$no++;
 	$selisih1 = mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y"));
 	$selisih2=$dataim['tglstart'];
 	$delta=$selisih1 - $selisih2;
@@ -157,6 +159,7 @@ ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
 				<td class="tdisi" width="30px">'.$no.'</td>
 				<td class="tdisi"><div class="jam">'.$a.' Day</div></td>
 				<td class="tdisi">'.$dataim['noim'].'</td>
+				<td class="tdisi">'.$dataim['nomercircuit'].'</td>
 				<td class="tdisi">'.$dataim['namapers'].'</td>
 				<td class="tdisi">'.substr($dataim['tgl_req'],0,-4).'</td>
 				<td class="tdisi">'.substr($dataim['orderby'],0,20).'</td>
@@ -234,6 +237,7 @@ ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
 				<td class="tdisi" width="30px">'.$no.'</td>
 				<td class="tdisi"><div class="jam">'.$a.' Day</div></td>
 				<td class="tdisi">'.$dataim['noim'].'</td>
+				<td class="tdisi">'.$dataim['nomercircuit'].'</td>
 				<td class="tdisi">'.$dataim['namapers'].'</td>
 				<td class="tdisi">'.substr($dataim['tgl_req'],0,-4).'</td>
 				<td class="tdisi">'.substr($dataim['orderby'],0,20).'</td>

@@ -112,6 +112,7 @@ ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
 			<tr>
 				<td class="tdhead">Time</td>
 				<td class="tdhead">No IM</td>
+				<td class="tdhead">Circuit ID</td>
 				<td class="tdhead">Nama Perusahaan</td>
 				<td class="tdhead">Tgl RFS</td>
 				<td class="tdhead">Order By</td>
@@ -165,6 +166,7 @@ ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
 			<tr>
 				<td class="tdisi" width="120px"><div class="jam">'.$a.' Day</div></td>
 				<td class="tdisi" width="550px">'.$dataim['noim'].'</td>
+				<td class="tdisi" width="550px">'.$dataim['nomercircuit'].'</td>
 				<td class="tdisi" width="500px">'.$dataim['namapers'].'</td>
 				<td class="tdisi" width="300px">'.$dataim['tgl_req'].'</td>
 				<td class="tdisi" width="350px">'.$dataim['orderby'].'</td>
@@ -240,6 +242,7 @@ ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
 				
 				<td class="tdisi" width="120px"><div class="jam">'.$a.' Day</div></td>
 				<td class="tdisi" width="550px">'.$dataim['noim'].'</td>
+				<td class="tdisi" width="550px">'.$dataim['nomercircuit'].'</td>
 				<td class="tdisi" width="500px">'.$dataim['namapers'].'</td>
 				<td class="tdisi" width="300px">'.$dataim['tgl_req'].'</td>
 				<td class="tdisi" width="350px">'.$dataim['orderby'].'</td>

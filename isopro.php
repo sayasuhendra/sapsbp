@@ -56,6 +56,7 @@ include "title.php";
 			<tr>
 				<td class="tdhead" width="30px">No</td>
 				<td class="tdhead">No IM</td>
+				<td class="tdhead">Circuit ID</td>
 				<td class="tdhead">Nama Perusahaan</td>
 				<td class="tdhead">Tgl RFS</td>
 				<td class="tdhead">Order By</td>
@@ -88,6 +89,7 @@ include "title.php";
 			<tr>
 				<td class="tdisi" width="30px">'.$no.'</td>
 				<td class="tdisi">'.$dataim['noim'].'</td>
+				<td class="tdisi">'.$dataim['nomercircuit'].'</td>
 				<td class="tdisi">'.$dataim['namapers'].'</td>
 				<td class="tdisi">'.$dataim['tgl_req'].'</td>
 				<td class="tdisi">'.$dataim['orderby'].'</td>
