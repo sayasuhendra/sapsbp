@@ -12,6 +12,7 @@
 /vendor
 /nms
 /pizza
+/.phpintel
 assi yang dipake.php
 koneksi.php
 composer.lock
