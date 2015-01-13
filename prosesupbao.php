@@ -124,11 +124,7 @@ include "title.php";
 					echo ($move5)? "Berhasil mengupload Capture Pizza." : "Gagal mengupload Capture Pizza."; echo "<br><br>";
 					echo ($move6)? "Berhasil mengupload Capture NMS." : "Gagal mengupload Capture NMS.";
 
-						$noim4digit = substr($noim, 0, 4);
-						$thn=date('y');
-					    $bln=date('m');
-					    $hri=date('d');
-					    $cirid = $thn . $bln . $hri . $noim4digit;
+
 					
 					$pilihnoim="select * from instal_im inner join fpa_tb on instal_im.noim=fpa_tb.noim where instal_im.noim='$noim'";
 
@@ -148,6 +144,13 @@ include "title.php";
 					$statdat='Active';
                     $ok='OK';
                     $areab=$dataim['area'];
+
+
+                    	$noim4digit = substr($noim, 0, 4);
+                        $tglrfsbaru = new DateTime($tglrfs);
+                        $tanggalcirid = $tglrfsbaru->format('ymd');
+                        $cirid = $tanggalcirid . $noim4digit;
+
 					
 					if($dataim['jenis_pekerjaan']=='Instalasi'){
 

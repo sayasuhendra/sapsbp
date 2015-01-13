@@ -48,31 +48,40 @@ include "title.php";
 		<?php
 		
 		include "koneksi.php";
+		include "roma.php";
+
 		$area=$_POST['area'];
         $jenpek=$_POST['jenpek'];
-		include "roma.php";
+
 		$waktuok=date('Ymd');
 		$pilihfpb="select * from instal_im where jenis_pekerjaan='$jenpek'";
 		$eksfpb=mysql_query($pilihfpb);
 		$datano=mysql_fetch_row($eksfpb);
+
 		if($datano==0){
 		
-		$nourut1=0001;
-		$nourutok1=sprintf("%04s",$nourut1);
-		$nofpb='SBP/FPB/'.$waktuok.'/'.$nourutok1;
-		$nourut='1';
-		$nourutok=sprintf("%04s",$nourut);
+			$nourut1=0001;
+			$nourutok1=sprintf("%04s",$nourut1);
+			$nofpb='SBP/FPB/'.$waktuok.'/'.$nourutok1;
+			$nourut='1';
+			$nourutok=sprintf("%04s",$nourut);
+
 		}
+
 		else if($datano >= 1){
-		$pilihim="select * from instal_im where jenis_pekerjaan='$jenpek'";
-		$eksim=mysql_query($pilihim);
-		while($datafpb=mysql_fetch_array($eksim)){
-		$nourut1=$datafpb['nourut'] + '1';
-		$nourutok1=sprintf("%04s",$nourut1);
-		$nofpb='SBP/FPB/'.$waktuok.'/'.$nourutok1;
-		$nourut=$datafpb['nourut'] + '1';
-		$nourutok=sprintf("%04s",$nourut);
-		}
+
+			$pilihim = "select * from instal_im where jenis_pekerjaan='$jenpek'";
+			$eksim = mysql_query($pilihim);
+
+			while($datafpb=mysql_fetch_array($eksim)){
+
+				$nourut1=$datafpb['nourut'] + '1';
+				$nourutok1=sprintf("%04s",$nourut1);
+				$nofpb='SBP/FPB/'.$waktuok.'/'.$nourutok1;
+				$nourut=$datafpb['nourut'] + '1';
+				$nourutok=sprintf("%04s",$nourut);
+
+			}
 		}
 		
 		date_default_timezone_set('Asia/Jakarta');
@@ -111,14 +120,21 @@ include "title.php";
 		$tipe_file=$_FILES['fupload']['type'];
 		$nama_file=$_FILES['fupload']['name'];
 		$move = move_uploaded_file($lokasi_file,'po/'.$nama_file);
+
+
+
+		$tglrfsbaru = new DateTime($tglrfs);
+		$tanggalcirid = $tglrfsbaru->format('ymd');
+		$cirid = $tanggalcirid . $nourutok;
+
 		
-		$inputdata="INSERT INTO instal_im (currency_bul,currency,popel,tglupim,tglim,status_inven,media_akses,space_rack,space_hosting,barang,biayain,biayabul,akses_speed,status_im,status_tm,status_fin,status_close,jenis_pekerjaan,noim,nourut,nofpb,namapers,alamat,cp,telp,email,jasa,tglrfs,keterangan,tujuan,status,nama_sales) VALUES ('$curbul','$cur','$nama_file','$waktu','$tanggal','$statinven','$media','$spacerack','$spacehosting','$barang','$biayain','$biayabul','$speed','$statim','$stattm','$statfin','$statclose','$jenpek','$noim','$nourutok1','$nofpb','$namapers','$alamat','$cp','$telp','$email','$jasa','$tglrfs','$keterangan','$tujuan','$status','$sales')";
+		$inputdata="INSERT INTO instal_im (currency_bul,nomercircuit,currency,popel,tglupim,tglim,status_inven,media_akses,space_rack,space_hosting,barang,biayain,biayabul,akses_speed,status_im,status_tm,status_fin,status_close,jenis_pekerjaan,noim,nourut,nofpb,namapers,alamat,cp,telp,email,jasa,tglrfs,keterangan,tujuan,status,nama_sales) VALUES ('$curbul','$cirid','$cur','$nama_file','$waktu','$tanggal','$statinven','$media','$spacerack','$spacehosting','$barang','$biayain','$biayabul','$speed','$statim','$stattm','$statfin','$statclose','$jenpek','$noim','$nourutok1','$nofpb','$namapers','$alamat','$cp','$telp','$email','$jasa','$tglrfs','$keterangan','$tujuan','$status','$sales')";
 		$query=mysql_query($inputdata);
 		
-		$inputmemo="INSERT INTO internal_memo (tglupim,tglstart,noim,namapers,jenpek,tgl_req,orderby,status_im,status_tm,status_fin,status_close,status_inven) VALUES ('$waktu','$selisih2','$noim','$namapers','$jenpek','$tglrfs','$sales','$statim','$stattm','$statfin','$statclose','$statinven')";
+		$inputmemo="INSERT INTO internal_memo (tglupim,nomercircuit,tglstart,noim,namapers,jenpek,tgl_req,orderby,status_im,status_tm,status_fin,status_close,status_inven) VALUES ('$waktu','$cirid','$selisih2','$noim','$namapers','$jenpek','$tglrfs','$sales','$statim','$stattm','$statfin','$statclose','$statinven')";
 		$querymemo=mysql_query($inputmemo);
 		
-		$isireport='Internal Memo Baru telah di kirim oleh <b>'.$sales.'</b> untuk perusahaan <b>'.$namapers.'</b>. Dengan layanan jasa yang di pilih adalah <b>'.$jasa.'</b>. Untuk kontak person bisa menghubungi <b>'.$cp.'</b> di Nomor '.$telp.'';
+		$isireport='Internal Memo Baru telah di kirim oleh <b>'.$sales.'</b> untuk perusahaan <b>'.$namapers.'</b>. Dengan layanan jasa yang di pilih adalah <b>'.$jasa.'</b>. Untuk kontak person bisa menghubungi <b>'.$cp.'</b> di Nomor '.$telp.'<br>IM Instalasi [' . $noim . '] dan Circuid ID [' . $cirid . '].';
 		$inputreport="INSERT INTO report_pro (noim,nofpb,nama_user,tgl,isi_report) VALUES ('$noim','$nofpb','$sales','$waktu','$isireport')";
 		$queryreport=mysql_query($inputreport);
 		
@@ -127,7 +143,7 @@ include "title.php";
 		while($tm=mysql_fetch_array($ekstm)){
 		$emailtm=$tm['email'];
 		$to=$emailtm;
-		$subject = "IM Instalasi [".$noim."]";
+		$subject = "IM Instalasi [" . $noim . "] dan Circuid ID [" . $cirid . "]." ;
 		$message = "Ada internal memo baru dari team sales, silahkan login ke sapsbp untuk lebih detailnya";
 		$headers .= "From: SAP Notification <sap@sbp.net.id>" . "\r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
@@ -140,6 +156,11 @@ include "title.php";
 		echo '<p>Terimakasih '.$sales.' data internal memo instalasi sudah di kirimkan ke departement DCO  untuk segera ditindaklanjuti</p>
 		<p>Adapun detail dari internal memo adalah sbb :</p>
 		<table class="tbrule" cellspacing="10px">
+			<tr>				
+				<td>No Circuit ID</td>
+				<td>:</td>
+				<td>' . $cirid . '</td>
+			</tr>
 			<tr>				
 				<td>No FPB</td>
 				<td>:</td>
