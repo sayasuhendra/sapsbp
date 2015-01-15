@@ -138,6 +138,7 @@ ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
                                 <td class="tdhead" width="120px">Time</td>
 				<td class="tdhead" width="520px">No IM</td>
 				<td class="tdhead" width="550px">Nama Perusahaan</td>
+				<td class="tdhead" width="520px">Circuit ID</td>
 				<td class="tdhead" width="350px">Tgl RFS</td>
 				<td class="tdhead" width="350px">Order By</td>
 				<td class="tdhead">Pekerjaan</td>
@@ -268,6 +269,7 @@ ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
                                 }
                                 echo '
 				<td class="tdisi">'.$dataim['tgl_req'].'</td>
+				<td class="tdisi">'.$dataim['nomercircuit'].'</td>
 				<td class="tdisi">'.substr($dataim['orderby'],0,15).'</td>
 				<td class="tdisi">'.$dataim['jenpek'].'</td>
 				<td class="tdisinormal">'; if($dataim['status_im']=='OK'){echo '<a id="show-option" href="#" title="'.$dataim['tglupim'].'"><img src="images/cekok.png"></a>';}else{echo '<img src="images/stop.png">';} echo '</td>
