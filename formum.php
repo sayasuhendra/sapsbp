@@ -76,6 +76,7 @@ include "title.php";
 						<option value="BTM">Batam</option>
 						<option value="TPI">TPI</option>
 						<option value="TBK">TBK</option>
+						<option value="TBK">Bali</option>
 					</select>
 				</td>
 			</tr>
