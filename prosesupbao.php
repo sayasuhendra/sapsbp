@@ -123,8 +123,6 @@ include "title.php";
 					echo ($move4)? "Berhasil mengupload Foto Lokasi." : "Gagal mengupload Foto Lokasi."; echo "<br><br>";
 					echo ($move5)? "Berhasil mengupload Capture Pizza." : "Gagal mengupload Capture Pizza."; echo "<br><br>";
 					echo ($move6)? "Berhasil mengupload Capture NMS." : "Gagal mengupload Capture NMS.";
-
-
 					
 					$pilihnoim="select * from instal_im inner join fpa_tb on instal_im.noim=fpa_tb.noim where instal_im.noim='$noim'";
 

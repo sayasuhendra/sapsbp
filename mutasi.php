@@ -251,6 +251,7 @@ selectFirst: false
 						<option value="Colocation">Colocation</option>
 						<option value="Hosting">Hosting</option>
 						<option value="Hosting">IP Transit</option>
+						<option value="Beli atau Sewa Perangkat">Beli atau Sewa Perangkat</option>
 					</select>
 				</td>
 			

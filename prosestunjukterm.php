@@ -83,7 +83,7 @@ include "title.php";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
                 $headers .= "Noim: " .$noim. "\r\n";
                 $headers .= "Bcc: sap@sbp.net.id \r\n";
-		$subject = "Termination Project [".$noim."] ".$namapers;
+		$subject = "Termination Project [".$noim."] ".$pers;
 		$message = '<html><body><p style="font-size : 14px; font-family : lucida grande,tahoma,verdana,arial,sans-serif;">
                                   Ada Tugas Terminasi dari Supervisor Teknikal untuk perusahaan '.$pers.'. Dengan detail keterangan sbb :</p>
                                   <table>
